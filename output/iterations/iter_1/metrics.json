@@ -1,0 +1,20 @@
+{
+  "iteration": 1,
+  "patients": {
+    "PATIENT_1": {
+      "reward": 0.8292,
+      "edit_burden": 0.1708,
+      "corrections_stored": 7,
+      "interpretation": "Good"
+    },
+    "PATIENT_2": {
+      "reward": 0.7199,
+      "edit_burden": 0.2801,
+      "corrections_stored": 6,
+      "interpretation": "Fair"
+    }
+  },
+  "overall_reward": 0.7746,
+  "overall_edit_burden": 0.2254,
+  "total_corrections_in_db": 46
+}

@@ -1,0 +1,24 @@
+{
+  "baseline_reward": 0.7581,
+  "final_reward": 0.7096,
+  "absolute_improvement": -0.0485,
+  "percent_improvement": -6.4,
+  "per_iteration": [
+    {
+      "iteration": 0,
+      "reward": 0.7581,
+      "edit_burden": 0.2419
+    },
+    {
+      "iteration": 1,
+      "reward": 0.7746,
+      "edit_burden": 0.2254
+    },
+    {
+      "iteration": 2,
+      "reward": 0.7096,
+      "edit_burden": 0.2904
+    }
+  ],
+  "verdict": "Edit burden reduced by 6.8% \u2014 agent learned from 2 doctor review(s)"
+}

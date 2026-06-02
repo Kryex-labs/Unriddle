@@ -1,0 +1,85 @@
+{
+  "overall_reward": 0.6806,
+  "overall_edit_burden": 0.3194,
+  "sections": {
+    "DEMOGRAPHICS": {
+      "similarity": 0.7184,
+      "edit_burden": 0.2816,
+      "draft_len": 37,
+      "edited_len": 66
+    },
+    "ADMISSION DATE": {
+      "similarity": 0.4431,
+      "edit_burden": 0.5569,
+      "draft_len": 37,
+      "edited_len": 130
+    },
+    "DISCHARGE DATE": {
+      "similarity": 1.0,
+      "edit_burden": 0.0,
+      "draft_len": 37,
+      "edited_len": 37
+    },
+    "PRINCIPAL DIAGNOSIS": {
+      "similarity": 1.0,
+      "edit_burden": 0.0,
+      "draft_len": 105,
+      "edited_len": 105
+    },
+    "SECONDARY DX": {
+      "similarity": 1.0,
+      "edit_burden": 0.0,
+      "draft_len": 208,
+      "edited_len": 208
+    },
+    "HOSPITAL COURSE": {
+      "similarity": 0.1902,
+      "edit_burden": 0.8098,
+      "draft_len": 37,
+      "edited_len": 352
+    },
+    "PROCEDURES": {
+      "similarity": 0.4405,
+      "edit_burden": 0.5595,
+      "draft_len": 37,
+      "edited_len": 131
+    },
+    "DISCHARGE MEDICATIONS": {
+      "similarity": 0.4993,
+      "edit_burden": 0.5007,
+      "draft_len": 569,
+      "edited_len": 192
+    },
+    "ALLERGIES": {
+      "similarity": 0.9317,
+      "edit_burden": 0.0683,
+      "draft_len": 75,
+      "edited_len": 86
+    },
+    "FOLLOW-UP": {
+      "similarity": 0.3756,
+      "edit_burden": 0.6244,
+      "draft_len": 37,
+      "edited_len": 160
+    },
+    "PENDING RESULTS": {
+      "similarity": 0.4066,
+      "edit_burden": 0.5934,
+      "draft_len": 37,
+      "edited_len": 145
+    },
+    "DISCHARGE CONDITION": {
+      "similarity": 0.9873,
+      "edit_burden": 0.0127,
+      "draft_len": 2968,
+      "edited_len": 3036
+    },
+    "CLINICIAN FLAGS": {
+      "similarity": 1.0,
+      "edit_burden": 0.0,
+      "draft_len": 2913,
+      "edited_len": 2913
+    }
+  },
+  "interpretation": "Fair"
+}

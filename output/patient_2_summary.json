@@ -1,0 +1,102 @@
+{
+  "patient_id": "PATIENT_2",
+  "demographics": {
+    "value": "[MISSING \u2014 requires clinician input]",
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "admission_date": {
+    "value": "[MISSING \u2014 requires clinician input; partial date 02/03/20xx seen on page 56 but context unclear]",
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "discharge_date": {
+    "value": "[MISSING \u2014 requires clinician input]",
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "principal_diagnosis": {
+    "value": "Diabetic Ketoacidosis (DKA)",
+    "status": "FOUND",
+    "source": "pages 54, 56, 58",
+    "flag_reason": null
+  },
+  "secondary_diagnoses": {
+    "value": "1. Acute Pyelonephritis; 2. Uncontrolled Type 2 Diabetes Mellitus; 3. Cholecystitis (mentioned in admission)",
+    "status": "FOUND",
+    "source": "pages 48, 51, 56, 58",
+    "flag_reason": null
+  },
+  "hospital_course": {
+    "value": "[MISSING \u2014 requires clinician input; fragmented consultation notes available but largely illegible due to poor scan quality of handwritten records]",
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "procedures": {
+    "value": "[MISSING \u2014 requires clinician input]",
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "discharge_medications": [
+    {
+      "name": "[MISSING \u2014 requires clinician input]",
+      "dose": null,
+      "route": null,
+      "frequency": null,
+      "status": "unknown",
+      "change_reason": null,
+      "flag": "CRITICAL: No legible medication chart found. Cannot perform medication reconciliation or drug interaction check. Clinician must manually extract medication list from original documents."
+    }
+  ],
+  "allergies": {
+    "value": "No Known Drug Allergies (NKDA)",
+    "status": "FOUND",
+    "source": "page 46",
+    "flag_reason": null
+  },
+  "follow_up": {
+    "value": "[MISSING \u2014 requires clinician input]",
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "pending_results": {
+    "value": "[MISSING \u2014 requires clinician input; no pending results documentation identified]",
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "discharge_condition": {
+    "value": "[MISSING \u2014 requires clinician input]",
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "clinician_flags": [
+    "[ESCALATED] Overall Documentation Quality: CRITICAL: Source documents are handwritten with poor scan quality rendering most clinical information illegible. Cannot extract: demographics, admission/discharge dates, complete medication list, procedures, hospital course details, follow-up instructions, or discharge condition. Manual clinician review of original documents required before discharge summary can be completed. Medication reconciliation and drug interaction check could not be performed due to illegible medication records.",
+    "NOTE: Diagnoses extracted (DKA, Acute Pyelonephritis, Uncontrolled T2DM, Cholecystitis) are based on partial legibility and should be verified by clinician",
+    "MISSING: Procedures \u2014 not documented in legible portions",
+    "[MISSING] discharge_medications: No legible medication chart found; cannot extract admission or discharge medications for reconciliation",
+    "MISSING: Complete medication list \u2014 cannot perform medication reconciliation or drug interaction check",
+    "MISSING: Hospital course \u2014 fragmented notes, largely illegible",
+    "MISSING: Follow-up instructions \u2014 not found",
+    "[MISSING] demographics: Patient name, age, gender not clearly legible in any available document due to poor scan quality of handwritten records",
+    "CRITICAL ESCALATION: Source documents are handwritten with poor scan quality rendering most clinical information illegible. Manual clinician review of original documents required.",
+    "[MISSING] follow_up: No follow-up instructions found in any available documents",
+    "MISSING: Demographics (name, age, gender) \u2014 not legible in any document",
+    "[MISSING] hospital_course: Hospital course summary not clearly documented; fragmented consultation notes available but largely illegible",
+    "MISSING: Pending results \u2014 not documented",
+    "[MISSING] discharge_condition: No discharge condition documented in available records",
+    "MISSING: Discharge condition \u2014 not documented",
+    "[MISSING] admission_date: Admission date not clearly legible; partial date reference 02/03/20xx visible on page 56 but unclear if this is admission date",
+    "MISSING: Discharge date \u2014 not found",
+    "MISSING: Admission date \u2014 partial date 02/03/20xx on page 56 but context unclear",
+    "[MISSING] procedures: No procedures documented in legible portions of available records",
+    "[MISSING] discharge_date: No discharge date found in any available documents"
+  ]
+}

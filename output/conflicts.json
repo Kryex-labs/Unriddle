@@ -1,0 +1,35 @@
+[
+  {
+    "patient_id": "PATIENT_1",
+    "timestamp": "2026-06-03T02:20:46",
+    "field": "Serum Sodium level",
+    "conflict": "CONFLICT: page 1 clinical note states '125.00 mmol/L' but page 28 ABG report states '114 mmol/L'",
+    "source_a": "page 1 clinical note",
+    "value_a": "125.00 mmol/L",
+    "source_b": "page 28 ABG report",
+    "value_b": "114 mmol/L",
+    "resolution": "REQUIRES CLINICIAN REVIEW \u2014 do not auto-resolve"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "timestamp": "2026-06-03T02:28:19",
+    "field": "Serum Sodium",
+    "conflict": "CONFLICT: page 1 admission note/hospital course states '125.00 mmol/L' but page 28 ABG report states '114 mmol/L'",
+    "source_a": "page 1 admission note/hospital course",
+    "value_a": "125.00 mmol/L",
+    "source_b": "page 28 ABG report",
+    "value_b": "114 mmol/L",
+    "resolution": "REQUIRES CLINICIAN REVIEW \u2014 do not auto-resolve"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "timestamp": "2026-06-03T02:51:04",
+    "field": "serum_sodium_level",
+    "conflict": "CONFLICT: page 1 hospital course narrative states '125.00 mmol/L' but page 28 ABG report states '114 mmol/L'",
+    "source_a": "page 1 hospital course narrative",
+    "value_a": "125.00 mmol/L",
+    "source_b": "page 28 ABG report",
+    "value_b": "114 mmol/L",
+    "resolution": "REQUIRES CLINICIAN REVIEW \u2014 do not auto-resolve"
+  }
+]

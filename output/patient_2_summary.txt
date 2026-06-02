@@ -1,0 +1,45 @@
+======================================================================
+DISCHARGE SUMMARY DRAFT — PATIENT_2
+[!]  THIS IS A DRAFT FOR CLINICIAN REVIEW — NOT FINAL
+======================================================================
+DEMOGRAPHICS       : [MISSING — requires clinician review]
+ADMISSION DATE     : [MISSING — requires clinician review]
+DISCHARGE DATE     : [MISSING — requires clinician review]
+PRINCIPAL DIAGNOSIS: Diabetic Ketoacidosis (DKA)  [src: pages 54, 56, 58]
+SECONDARY DX       : 1. Acute Pyelonephritis; 2. Uncontrolled Type 2 Diabetes Mellitus; 3. Cholecystitis (mentioned in admission)  [src: pages 48, 51, 56, 58]
+
+HOSPITAL COURSE:
+[MISSING — requires clinician review]
+
+PROCEDURES         : [MISSING — requires clinician review]
+
+DISCHARGE MEDICATIONS:
+  • [MISSING — requires clinician input]    [UNKNOWN]  [!] CRITICAL: No legible medication chart found. Cannot perform medication reconciliation or drug interaction check. Clinician must manually extract medication list from original documents.
+
+ALLERGIES          : No Known Drug Allergies (NKDA)  [src: page 46]
+FOLLOW-UP          : [MISSING — requires clinician review]
+PENDING RESULTS    : [MISSING — requires clinician review]
+DISCHARGE CONDITION: [MISSING — requires clinician review]
+
+CLINICIAN FLAGS (require review):
+  [!]  [ESCALATED] Overall Documentation Quality: CRITICAL: Source documents are handwritten with poor scan quality rendering most clinical information illegible. Cannot extract: demographics, admission/discharge dates, complete medication list, procedures, hospital course details, follow-up instructions, or discharge condition. Manual clinician review of original documents required before discharge summary can be completed. Medication reconciliation and drug interaction check could not be performed due to illegible medication records.
+  [!]  NOTE: Diagnoses extracted (DKA, Acute Pyelonephritis, Uncontrolled T2DM, Cholecystitis) are based on partial legibility and should be verified by clinician
+  [!]  MISSING: Procedures — not documented in legible portions
+  [!]  [MISSING] discharge_medications: No legible medication chart found; cannot extract admission or discharge medications for reconciliation
+  [!]  MISSING: Complete medication list — cannot perform medication reconciliation or drug interaction check
+  [!]  MISSING: Hospital course — fragmented notes, largely illegible
+  [!]  MISSING: Follow-up instructions — not found
+  [!]  [MISSING] demographics: Patient name, age, gender not clearly legible in any available document due to poor scan quality of handwritten records
+  [!]  CRITICAL ESCALATION: Source documents are handwritten with poor scan quality rendering most clinical information illegible. Manual clinician review of original documents required.
+  [!]  [MISSING] follow_up: No follow-up instructions found in any available documents
+  [!]  MISSING: Demographics (name, age, gender) — not legible in any document
+  [!]  [MISSING] hospital_course: Hospital course summary not clearly documented; fragmented consultation notes available but largely illegible
+  [!]  MISSING: Pending results — not documented
+  [!]  [MISSING] discharge_condition: No discharge condition documented in available records
+  [!]  MISSING: Discharge condition — not documented
+  [!]  [MISSING] admission_date: Admission date not clearly legible; partial date reference 02/03/20xx visible on page 56 but unclear if this is admission date
+  [!]  MISSING: Discharge date — not found
+  [!]  MISSING: Admission date — partial date 02/03/20xx on page 56 but context unclear
+  [!]  [MISSING] procedures: No procedures documented in legible portions of available records
+  [!]  [MISSING] discharge_date: No discharge date found in any available documents
+======================================================================

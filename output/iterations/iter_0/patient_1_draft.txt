@@ -1,0 +1,46 @@
+======================================================================
+DISCHARGE SUMMARY DRAFT — PATIENT_1
+[!]  THIS IS A DRAFT FOR CLINICIAN REVIEW — NOT FINAL
+======================================================================
+DEMOGRAPHICS       : [MISSING — requires clinician review]
+ADMISSION DATE     : [MISSING — requires clinician review]
+DISCHARGE DATE     : [MISSING — requires clinician review]
+PRINCIPAL DIAGNOSIS: Acute Gastroenteritis with Dehydration  [src: page 1]
+SECONDARY DX       : 1) Urinary Tract Infection; 2) Known case of Thyroid disorder on treatment; 3) Grade I fatty liver (incidental finding on USG); 4) Cholelithiasis without cholecystitis (incidental finding on USG)  [src: pages 1, 30]
+
+HOSPITAL COURSE:
+Patient presented with multiple episodes of loose stools, 2-3 episodes of vomiting, fatigue for 3 days, and fever since previous day. Initially treated at local clinic before presenting to this facility. On admission: PR-89/min, BP-130/80 mmHg, RR-20/min, SPO2-98% on room air, conscious and oriented. Initial investigations showed normal CBC, elevated serum creatinine (1.65mg/dl), low serum sodium (125.00mmol/L). Urine routine showed ketone bodies (+), 10-12/hpf pus cells, 13-20/hpf epithelial cells with bacteria present. Patient treated with IV fluids, IV antibiotics, IV PPIs, IV antiemetics and other supportive measures. USG abdomen/pelvis showed Grade-I fatty liver changes and mildly edematous ascending colon up to hepatic flexure (suggestive of colitis), cholelithiasis, minimal ascites, and minimal right pleural effusion with underlying subsegmental lung consolidation. Repeat serum creatinine (1.17mg/dl) improved to normal. TSH and Free T4 were normal. Stool routine showed 2-3/hpf RBCs, plenty/hpf pus cells. Patient was advised to stay for further management but attendants not willing; hence discharged at request.  [src: pages 1, 2, 30]
+
+PROCEDURES         : 1) USG Abdomen and Pelvis (Bedside); 2) Laboratory investigations including CBC, serum creatinine, serum electrolytes, urine routine, stool routine, ABG with lactate, TSH, Free T4; 3) Urine culture and sensitivity (result pending)  [src: pages 1, 2, 27, 28, 30]
+
+DISCHARGE MEDICATIONS:
+  • Ractiper (Rabeprazole) 40mg oral Once daily morning (before food) [ADDED]
+  • Emeset (Ondansetron) 4mg oral Twice daily (1-0-1) [ADDED]
+  • M Strong (Multivitamin) Not specified oral Once daily morning (1-0-0) [ADDED]
+  • Entroq (Probiotic) Not fully readable oral Not fully readable [ADDED]  [!] Dose and frequency partially illegible in source document
+  • Meftal Spas (Mefenamic acid + Dicyclomine) Not specified oral As needed (SOS) [ADDED]
+  • Thyroid medication (home medication) Unknown oral Unknown [STOPPED]  [!] ESCALATED: Patient has known thyroid disorder on treatment but thyroid medication not included in discharge list. No documentation of continuation or discontinuation. Requires clinician review.
+
+ALLERGIES          : [MISSING — requires clinician review]
+FOLLOW-UP          : 1) Review immediately in case of fever, loose stools, vomiting, fatigue. 2) Review on 09.05.2026 for CBC. 3) Review urine culture and sensitivity results when available.  [src: page 2]
+PENDING RESULTS    : [PENDING — result not yet available]
+DISCHARGE CONDITION: Hemodynamically stable. Discharged at request (against medical advice to stay for further management).  [src: page 2]
+
+CLINICIAN FLAGS (require review):
+  [!]  [MISSING] Allergies: No clear allergy documentation found in available records. Nursing notes reference 'Known Drug Allergies' fields but content not legible due to OCR issues.
+  [!]  [MISSING] Admission Date: Admission date not clearly documented in available readable text. Discharge checklist has field but value not captured.
+  [!]  ESCALATION: Thyroid medication - Patient documented as 'K/C/O Thyroid disorder on treatment' at admission but no thyroid medication on discharge list. Requires confirmation if thyroid medication should continue.
+  [!]  MISSING: Specific thyroid medication details (name, dose) not documented at admission
+  [!]  [MISSING] Demographics (Age, Gender, Full Name): Discharge checklist (page 24) has fields for demographic information but values not captured in OCR. Clinical notes refer to patient as 'she' indicating female gender.
+  [!]  MISSING: Discharge date not documented in legible text
+  [!]  [MISSING] Admission Thyroid Medication Details: Patient history states 'K/C/O Thyroid disorder on treatment' but specific medication name, dose, and frequency not documented in available records.
+  [!]  MISSING: Allergies not documented in legible text
+  [!]  [ESCALATED] Pending Results - Urine Culture and Sensitivity: Urine culture and sensitivity was sent but result is still awaited at time of discharge. Patient has documented UTI and was on IV antibiotics. Follow-up plan should include review of culture results to ensure appropriate antibiotic coverage. Patient discharged at request before results available.
+  [!]  NOTE: Patient discharged at request/AMA - attendants not willing for patient to stay for further management
+  [!]  MISSING: Admission date not documented in legible text
+  [!]  NOTE: Discharge medication Entroq (Probiotic) - dose and frequency partially illegible in source document, requires verification
+  [!]  [MISSING] Discharge Date: Discharge date not clearly documented in available readable text. Follow-up on 09.05.2026 mentioned which suggests discharge shortly before this date.
+  [!]  [ESCALATED] Discharge Medications - Thyroid medication: Patient documented as 'K/C/O Thyroid disorder on treatment' at admission (page 1), but no thyroid medication appears on the discharge medication list (page 2). Home thyroid medication not documented specifically at admission, and continuation/discontinuation at discharge not addressed. Requires clinician review to confirm if thyroid medication should be continued.
+  [!]  ESCALATION: Urine Culture Pending - Patient discharged at request with UTI diagnosis but urine culture results pending. Follow-up plan should address review of culture results for appropriate antibiotic coverage.
+  [!]  MISSING: Demographics (age, full name) not documented in legible text
+======================================================================

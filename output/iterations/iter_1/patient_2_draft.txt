@@ -1,0 +1,44 @@
+======================================================================
+DISCHARGE SUMMARY DRAFT — PATIENT_2
+[!]  THIS IS A DRAFT FOR CLINICIAN REVIEW — NOT FINAL
+======================================================================
+DEMOGRAPHICS       : [MISSING — requires clinician review]
+ADMISSION DATE     : [MISSING — requires clinician review]
+DISCHARGE DATE     : [MISSING — requires clinician review]
+PRINCIPAL DIAGNOSIS: Diabetic Ketoacidosis (DKA) — [requires clinician to document resolution status]  [src: pages 54, 56, 58]
+SECONDARY DX       : Type 2 Diabetes Mellitus — uncontrolled; Acute pyelonephritis — [requires clinician to document resolution status]  [src: pages 51, 56, 58]
+
+HOSPITAL COURSE:
+[MISSING — requires clinician review]
+
+PROCEDURES         : [MISSING — requires clinician review]
+
+DISCHARGE MEDICATIONS:
+  • [MISSING — No medication chart or discharge documentation available]    [MISSING]  [!] [!] CRITICAL: No MEDICATION_CHART or DISCHARGE_DOC found. Clinician must provide complete discharge medication list. For each medication, document: Drug (Brand) Dose Route Frequency — [STATUS: NEW/CONTINUED/MODIFIED/CEASED]
+
+ALLERGIES          : No known drug allergies  [src: pages 46, 49, 50, 51, 52, 55, 57]
+FOLLOW-UP          : [MISSING — requires clinician review]
+PENDING RESULTS    : [MISSING — requires clinician review]
+DISCHARGE CONDITION: [MISSING — requires clinician review]
+
+CLINICIAN FLAGS (require review):
+  [!]  Demographics (name, age, gender, MRN) not extractable from available records.
+  [!]  CRITICAL: No MEDICATION_CHART or DISCHARGE_DOC found — unable to perform medication reconciliation. Clinician must provide complete admission and discharge medication lists.
+  [!]  Resolution status required for principal diagnosis (DKA) and secondary diagnosis (pyelonephritis).
+  [!]  [MISSING] admission_medications: No MEDICATION_CHART document found in the patient record. Unable to extract admission medication list.
+  [!]  [ESCALATED] discharge_medications: CRITICAL: No MEDICATION_CHART or DISCHARGE_DOC found in patient record. Clinician must provide complete admission and discharge medication lists for safe discharge. Unable to perform medication reconciliation without source documentation.
+  [!]  [MISSING] discharge_date: No DISCHARGE_DOC found. Discharge date not documented in available records.
+  [!]  Hospital course documentation incomplete — handwritten clinical notes largely illegible. Clinician must document: (1) admission vitals, (2) DKA management details, (3) pyelonephritis treatment course, (4) glycemic control measures, (5) discharge disposition.
+  [!]  [MISSING] demographics: Patient demographics (name, age, gender, MRN) not clearly documented in available records - handwritten admission notes are largely illegible.
+  [!]  Procedures performed during hospitalization not clearly documented.
+  [!]  Follow-up instructions required.
+  [!]  [MISSING] discharge_condition: No DISCHARGE_DOC found. Discharge condition not documented in available records.
+  [!]  [MISSING] admission_date: Admission date not clearly legible in handwritten admission notes.
+  [!]  [MISSING] discharge_medications: No DISCHARGE_DOC or MEDICATION_CHART document found. Unable to extract discharge medication list.
+  [!]  [MISSING] procedures: Procedures not clearly documented in available records - handwritten notes largely illegible.
+  [!]  Admission date and discharge date not documented in available records.
+  [!]  Discharge condition not documented.
+  [!]  [ESCALATED] hospital_course: Handwritten clinical notes are largely illegible. Unable to accurately extract detailed hospital course. Clinician review required to document: (1) admission vitals, (2) DKA management details, (3) pyelonephritis treatment course, (4) glycemic control measures, (5) discharge disposition.
+  [!]  NOTE: Patient has known Type 2 Diabetes — ensure appropriate diabetes medication and insulin regimen documented at discharge.
+  [!]  [MISSING] follow_up: No DISCHARGE_DOC found. Follow-up instructions not documented in available records.
+======================================================================

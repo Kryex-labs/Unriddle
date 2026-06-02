@@ -1,0 +1,18 @@
+.env
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Generated source artifacts that can be regenerated locally
+patient_data.pdf
+pages/
+patient_data.txt
+patient_data_clean.txt
+patient_data_pages.json
+patient_data_progress.json
+output/run_log.txt
+output/*_error.txt

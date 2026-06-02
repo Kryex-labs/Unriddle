@@ -1,0 +1,66 @@
+======================================================================
+DISCHARGE SUMMARY — PATIENT_1
+[!]  THIS IS A DRAFT FOR CLINICIAN REVIEW — NOT FINAL
+======================================================================
+DEMOGRAPHICS       : [MISSING — requires clinician review]
+ADMISSION DATE     : [MISSING — requires clinician review]
+DISCHARGE DATE     : [MISSING — requires clinician review]
+PRINCIPAL DIAGNOSIS: Acute Gastroenteritis with Dehydration — resolved on discharge  [src: page 1]
+SECONDARY DX       : 
+  1. Urinary Tract Infection — treated, culture pending at discharge
+  2. Thyroid disorder — known case, on treatment
+  3. Grade I Fatty Liver — incidental finding
+  4. Cholelithiasis — incidental finding, without cholecystitis
+  5. Hyponatremia — [requires clinician to document resolution status]
+  6. Acute Kidney Injury (Serum Creatinine 1.65mg/dL on admission) — resolved (repeat 1.17mg/dL, then 0.85mg/dL)  [src: pages 1, 2, 27, 28, 30]
+
+HOSPITAL COURSE:
+[MISSING — requires clinician review]
+Admission vitals: [MISSING — requires clinician review]
+Discharge disposition: Patient discharged at own request (against medical advice for further management). Attenders not willing to stay for further management. Risks of premature discharge explained to patient/attender — [requires clinician to document acknowledgment].
+
+PROCEDURES         : 
+  1. USG Abdomen and Pelvis (Bedside)
+  2. Arterial Blood Gas (ABG) with Lactate
+  3. Foley catheter insertion (documented in situ on imaging)  [src: pages 1, 2, 28, 30]
+
+DISCHARGE MEDICATIONS:
+  • Rabeprazole (Ractiper) 40mg oral once daily (morning), before food — NEW
+  • Ondansetron (Emeset) 4mg oral once daily (morning) — NEW
+  • Nitazoxanide + Ofloxacin (Entrogard) [dose not specified — requires clinician input] oral twice daily (morning and night) — NEW
+  • Multivitamin (M Strong) [dose not specified — requires clinician input] oral once daily (morning) — NEW
+  • Mefenamic Acid + Dicyclomine (Meftal Spas) [dose not specified — requires clinician input] oral as needed (SOS) — NEW
+  • [Unknown medication] [illegible — requires clinician verification] oral twice daily (morning and night) — NEW  [!] FLAGGED — medication partially illegible, requires clinician verification
+  • Thyroid medication (home medication) [drug name, dose, frequency unknown — not documented] oral [unknown] — STOPPED  [!] CRITICAL — ESCALATED: Possible inadvertent omission of home thyroid medication. Requires immediate clinician review. Verify patient's home thyroid medication and add to discharge list if continuation intended.
+
+ALLERGIES          : [MISSING — requires clinician review; nursing notes field illegible]
+
+FOLLOW-UP          : 
+  1. Review immediately in case of fever, loose stools, vomiting, or fatigue
+  2. Scheduled follow-up on 09.05.2026 with CBC
+  3. Urine culture result to be reviewed at follow-up
+  4. Return to ED immediately if symptoms worsen or new symptoms develop.
+
+PENDING RESULTS    : Urine culture and sensitivity — awaited at time of discharge. Results to be communicated to patient by treating team/GP.
+
+DISCHARGE CONDITION: Stable with ongoing monitoring required (discharged at request against medical advice for further management)  [src: page 2]
+
+CLINICIAN FLAGS (require review):
+  [!]  ⚠️ MISSING: Allergies — nursing notes field illegible, requires verification.
+  [!]  ℹ️ INCIDENTAL FINDINGS: Cholelithiasis (13.3mm) without cholecystitis noted on USG — may require outpatient surgical evaluation.
+  [!]  ⚠️ PENDING RESULT: Urine culture and sensitivity awaited — Patient discharged before result available. Ensure follow-up plan for culture result and antibiotic adjustment if needed.
+  [!]  ⚠️ MISSING: Discharge date not documented.
+  [!]  ⚠️ MEDICATION: One discharge medication on page 2 is partially illegible — requires clinician verification.
+  [!]  ⚠️ CRITICAL: Thyroid medication potentially omitted from discharge — Patient documented as 'K/C/O Thyroid disorder on treatment' (page 1) but NO thyroid medication on discharge list (page 2). Admission medication charts illegible. VERIFY AND ADD HOME THYROID MEDICATION.
+  [!]  ⚠️ DISCHARGE AT REQUEST: Patient discharged against advice for further management. Document risks explained and patient/attender acknowledgment.
+  [!]  [MISSING] admission_date: Admission date not clearly documented. Page 16 shows partial date but illegible.
+  [!]  [MISSING] discharge_date: Discharge date not found. Follow-up date mentioned as 09.05.2026 on page 2.
+  [!]  [MISSING] allergies: Nursing notes mention 'Known Drug Allergies' field but content illegible due to OCR quality on pages 17-19.
+  [!]  [ESCALATED] pending_results - Urine culture: Urine culture and sensitivity sent but result awaited at time of discharge (documented on pages 1 and 2). Patient discharged at request before result available. Need follow-up plan for culture result.
+  [!]  [MISSING] demographics: Patient name, age, gender not found in any reviewed documents. Discharge checklist (page 24) has placeholders but no actual values.
+  [!]  ⚠️ MISSING: Demographics (name, age, gender) not found in available documents.
+  [!]  [ESCALATED] discharge_medications - Thyroid medication: Patient documented as 'K/C/O Thyroid disorder on treatment' on admission (page 1), but NO thyroid medication appears on discharge medication list (page 2). Admission medication charts (pages 42-45) are illegible. CRITICAL: Thyroid medication may have been inadvertently omitted from discharge. Requires clinician verification.
+  [!]  ⚠️ MISSING: Admission date not documented legibly.
+  [!]  [ESCALATED] discharge_disposition: Patient discharged at request (DAMA/LAMA) - documented as 'attenders not willing to stay for further management' (page 2). Requires documentation of risks explained and patient/attender acknowledgment.
+  [!]  [MISSING] admission_vitals: Admission vitals not documented in hospital course section — requires clinician input.
+======================================================================

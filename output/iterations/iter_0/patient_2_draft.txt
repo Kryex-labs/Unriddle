@@ -1,0 +1,47 @@
+======================================================================
+DISCHARGE SUMMARY DRAFT — PATIENT_2
+[!]  THIS IS A DRAFT FOR CLINICIAN REVIEW — NOT FINAL
+======================================================================
+DEMOGRAPHICS       : [MISSING — requires clinician review]
+ADMISSION DATE     : [MISSING — requires clinician review]
+DISCHARGE DATE     : [MISSING — requires clinician review]
+PRINCIPAL DIAGNOSIS: Diabetic Ketoacidosis (DKA) with Uncontrolled Type 2 Diabetes Mellitus  [src: pages 54, 56, 58]
+SECONDARY DX       : 1. Acute pyelonephritis; 2. Cholecystitis  [src: pages 48, 51, 52, 58]
+
+HOSPITAL COURSE:
+Patient presented with generalized weakness and myalgia. Admitted for management of DKA in the setting of uncontrolled Type 2 Diabetes Mellitus. Concurrent infections identified including acute pyelonephritis and cholecystitis. Patient was managed medically during admission. [Detailed hospital course — requires clinician input]  [FLAG: None]
+
+PROCEDURES         : [MISSING — requires clinician review]
+
+DISCHARGE MEDICATIONS:
+  • [MISSING — No discharge medication list available]    [MISSING]  [!] CRITICAL: No MEDICATION_CHART or DISCHARGE_DOC found. Clinician must provide complete discharge medication list.
+
+ALLERGIES          : No Known Drug Allergies (NKDA)  [src: pages 46, 49-57 (repeated on consultation sheets)]
+FOLLOW-UP          : [MISSING — requires clinician review]
+PENDING RESULTS    : [MISSING — requires clinician review]
+DISCHARGE CONDITION: [MISSING — requires clinician review]
+
+CLINICIAN FLAGS (require review):
+  [!]  [MISSING] admission_medications: No MEDICATION_CHART document type found in patient records. Admission notes (pages 46-48) do not contain clear medication list.
+  [!]  MISSING FIELD: discharge_date - No discharge documentation found in available records
+  [!]  MISSING FIELD: demographics - Patient demographics not clearly documented in available admission notes
+  [!]  [MISSING] admission_date: Admission date not clearly legible in admission notes (pages 46-48). Partial date fragments visible but not fully readable.
+  [!]  CRITICAL: No discharge documentation available. Missing discharge date, discharge condition, follow-up instructions, and discharge medications. Clinician input required for all discharge-related fields. (Escalation ID: PATIENT_2_discharge_documentation_1780434825)
+  [!]  [MISSING] discharge_medications: No DISCHARGE_DOC document type found in patient records. Unable to extract discharge medication list.
+  [!]  MISSING FIELD: admission_date - Admission date not clearly legible in admission notes
+  [!]  MISSING FIELD: follow_up - No discharge documentation found
+  [!]  [MISSING] follow_up: No discharge documentation found. Follow-up instructions not available.
+  [!]  NOTE: Source documents are handwritten with limited legibility. Clinical content extracted from readable portions only.
+  [!]  [ESCALATED] discharge_medications: CRITICAL: No MEDICATION_CHART or DISCHARGE_DOC found in patient records. Unable to perform medication reconciliation. Discharge medication list must be provided by clinician.
+  [!]  MISSING FIELD: discharge_condition - No discharge documentation found
+  [!]  MISSING FIELD: procedures - No clear documentation of procedures performed
+  [!]  [MISSING] demographics: Patient demographics (name, age, gender, MRN) not clearly documented in available admission notes (pages 46-48).
+  [!]  [MISSING] procedures: No clear documentation of procedures performed during admission found in available records.
+  [!]  [ESCALATED] discharge_documentation: CRITICAL: No discharge documentation available. Missing discharge date, discharge condition, follow-up instructions, and discharge medications. Clinician input required for all discharge-related fields.
+  [!]  NOTE: Medication reconciliation could not be performed due to missing admission and discharge medication lists.
+  [!]  MISSING FIELD: admission_medications - No MEDICATION_CHART document type found in patient records
+  [!]  CRITICAL: No MEDICATION_CHART or DISCHARGE_DOC found in patient records. Unable to perform medication reconciliation. Discharge medication list must be provided by clinician. (Escalation ID: PATIENT_2_discharge_medications_1780434825)
+  [!]  [MISSING] discharge_date: No discharge documentation found in available records.
+  [!]  MISSING FIELD: discharge_medications - No DISCHARGE_DOC document type found in patient records
+  [!]  [MISSING] discharge_condition: No discharge documentation found. Patient condition at discharge not documented.
+======================================================================

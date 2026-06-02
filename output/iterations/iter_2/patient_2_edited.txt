@@ -1,0 +1,67 @@
+======================================================================
+DISCHARGE SUMMARY DRAFT — PATIENT_2
+[!]  THIS IS A DRAFT FOR CLINICIAN REVIEW — NOT FINAL
+======================================================================
+DEMOGRAPHICS       : [MISSING — requires clinician review: patient name, age, sex, MRN]
+ADMISSION DATE     : [MISSING — requires clinician review; partial date reference 02/03/20 found on consultation sheet page 56 — requires verification]
+DISCHARGE DATE     : [MISSING — requires clinician review]
+PRINCIPAL DIAGNOSIS: Diabetic Ketoacidosis (DKA) — [requires clinician to document resolution status]  [src: pages 54, 56, 58]
+SECONDARY DX       : Type 2 Diabetes Mellitus — uncontrolled; Acute Pyelonephritis — [requires clinician to document resolution status]; Cholecystitis — [requires clinician verification if applicable]  [src: pages 48, 51, 56, 58]
+
+HOSPITAL COURSE:
+Admission Vitals: [MISSING — partially visible on page 47 but not fully legible (PR, BP, RR, SpO2, Temp mentioned but values unclear). Requires clinician input.]
+
+[MISSING — requires clinician review: Hospital course details largely illegible in source documents. Clinician must document treatment course, response to therapy, and discharge readiness.]
+
+Discharge Disposition: [MISSING — requires clinician to document discharge destination and mobility status]
+
+PROCEDURES         : [MISSING — requires clinician review; possible cholecystectomy mentioned but illegible in source documents — requires verification]
+
+DISCHARGE MEDICATIONS:
+  • [MISSING — No medication chart or discharge documentation available]  
+  
+[!] CRITICAL: No MEDICATION_CHART or DISCHARGE_DOC found. Clinician must provide complete discharge medication list.
+
+Format required for each medication: Drug (Brand) Dose Route Frequency — [STATUS: NEW/CONTINUED/MODIFIED/CEASED]
+
+[!] NOTE: Patient has known Type 2 Diabetes and DKA — ensure documentation of:
+• Basal insulin (type, dose, timing, route — typically subcutaneous)
+• Bolus/prandial insulin (if applicable — type, dose, timing, route)
+• Oral hypoglycaemic agents (if any — drug, dose, route, frequency)
+• Antibiotic therapy for acute pyelonephritis (drug, dose, route, frequency, total duration, days remaining)
+• VTE prophylaxis status on discharge (if applicable)
+• Potassium supplementation (if applicable — often required post-DKA)
+
+ALLERGIES          : No Known Drug Allergies (NKDA) — verified  [src: pages 46, 49, 50, 51, 52, 55, 56, 57]
+
+FOLLOW-UP          : [MISSING — requires clinician review: specify follow-up appointments, timing, and location]
+Return to ED immediately if symptoms worsen or new symptoms develop.
+
+PENDING RESULTS    : [MISSING — requires clinician review; no LAB_RESULT pages available in document index]
+Results to be communicated to patient by treating team/GP.
+
+DISCHARGE CONDITION: [MISSING — requires clinician to select one: Stable / Improved / Stable with ongoing monitoring required]
+
+CLINICIAN FLAGS (require review):
+  [!]  MISSING: Pending lab results unknown - no LAB_RESULT pages available
+  [!]  MISSING: Discharge condition not documented
+  [!]  MISSING: Procedures - possible cholecystectomy mentioned but illegible, requires verification
+  [!]  [MISSING] admission_date: Admission date not clearly legible in available documents. Only partial date reference 02/03/20 found on consultation sheet page 56.
+  [!]  MISSING: Discharge date not documented
+  [!]  [MISSING] demographics: Patient demographics (name, age, sex, MRN) not clearly documented in available pages.
+  [!]  MISSING: Admission vitals partially visible but illegible - requires documentation
+  [!]  [MISSING] follow_up: No discharge documentation with follow-up instructions found.
+  [!]  NOTE: Source documents appear to be poor quality scans or handwritten notes with significant legibility issues - clinician review of original records recommended
+  [!]  MISSING: Hospital course details largely illegible - clinician must document treatment course, response to therapy, and discharge readiness
+  [!]  [MISSING] discharge_medications: No MEDICATION_CHART or DISCHARGE_DOC pages found in document index. Cannot extract admission or discharge medication lists. Patient has Type 2 DM and DKA - critical to document diabetic medications.
+  [!]  MISSING: Admission date not clearly documented - partial date '02/03/20' found but requires verification
+  [!]  [MISSING] pending_results: No LAB_RESULT pages in document index. Unable to determine if any results are pending.
+  [!]  [MISSING] admission_vitals: Admission vitals partially visible on page 47 but not fully legible (PR, BP, RR, SpO2, Temp mentioned but values unclear). Requires clinician input.
+  [!]  MISSING: Follow-up instructions not documented
+  [!]  [MISSING] procedures: No clear procedure documentation found. Possible cholecystectomy mentioned but illegible - requires clinician verification.
+  [!]  CRITICAL ESCALATION: No MEDICATION_CHART or DISCHARGE_DOC found in patient records. Patient has DKA and Type 2 DM - insulin regimen and diabetic medications MUST be documented. Patient also has acute pyelonephritis - antibiotic therapy must be specified. Complete medication reconciliation required.
+  [!]  [ESCALATED] discharge_medications: CRITICAL: No MEDICATION_CHART or DISCHARGE_DOC found. Patient has documented DKA and Type 2 DM - insulin regimen and diabetic medications MUST be documented. Also has acute pyelonephritis - antibiotic therapy must be specified. Clinician must provide complete medication reconciliation.
+  [!]  MISSING: Demographics not found - clinician must provide patient name, age, sex, MRN
+  [!]  [MISSING] discharge_date: No discharge documentation found in available records.
+  [!]  [MISSING] discharge_condition: No discharge documentation found in available records.
+======================================================================

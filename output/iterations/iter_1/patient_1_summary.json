@@ -1,0 +1,152 @@
+{
+  "patient_id": "PATIENT_1",
+  "demographics": {
+    "value": null,
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "admission_date": {
+    "value": null,
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "discharge_date": {
+    "value": null,
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "principal_diagnosis": {
+    "value": "Acute Gastroenteritis with Dehydration \u2014 resolved on discharge",
+    "status": "FOUND",
+    "source": "page 1",
+    "flag_reason": null
+  },
+  "secondary_diagnoses": {
+    "value": "1. Urinary Tract Infection \u2014 treated, culture pending at discharge; 2. Thyroid disorder \u2014 known case, on treatment; 3. Grade I Fatty Liver \u2014 incidental finding; 4. Cholelithiasis \u2014 incidental finding, without cholecystitis; 5. Hyponatremia \u2014 [requires clinician to document resolution status]; 6. Acute Kidney Injury (Serum Creatinine 1.65mg/dL on admission) \u2014 resolved (repeat 1.17mg/dL, then 0.85mg/dL)",
+    "status": "FOUND",
+    "source": "pages 1, 2, 27, 28, 30",
+    "flag_reason": null
+  },
+  "hospital_course": {
+    "value": null,
+    "status": "MISSING",
+    "source": "pages 1, 2, 27, 28, 30",
+    "flag_reason": null
+  },
+  "procedures": {
+    "value": "1. USG Abdomen and Pelvis (Bedside); 2. Arterial Blood Gas (ABG) with Lactate; 3. Foley catheter insertion (documented in situ on imaging)",
+    "status": "FOUND",
+    "source": "pages 1, 2, 28, 30",
+    "flag_reason": null
+  },
+  "discharge_medications": [
+    {
+      "name": "Rabeprazole (Ractiper)",
+      "dose": "40mg",
+      "route": "oral",
+      "frequency": "once daily (morning), before food",
+      "status": "added",
+      "change_reason": "New - for gastritis/GI protection",
+      "flag": null
+    },
+    {
+      "name": "Ondansetron (Emeset)",
+      "dose": "4mg",
+      "route": "oral",
+      "frequency": "once daily",
+      "status": "added",
+      "change_reason": "New - for nausea/vomiting",
+      "flag": null
+    },
+    {
+      "name": "Nitazoxanide + Ofloxacin (Entrogard)",
+      "dose": "[dose not specified \u2014 requires clinician input]",
+      "route": "oral",
+      "frequency": "twice daily (morning and evening)",
+      "status": "added",
+      "change_reason": "New - for gastroenteritis/infection",
+      "flag": null
+    },
+    {
+      "name": "Multivitamin (M Strong)",
+      "dose": "[dose not specified]",
+      "route": "oral",
+      "frequency": "once daily (morning)",
+      "status": "added",
+      "change_reason": "New - supportive therapy",
+      "flag": null
+    },
+    {
+      "name": "Mefenamic Acid + Dicyclomine (Meftal Spas)",
+      "dose": "[dose not specified]",
+      "route": "oral",
+      "frequency": "as needed (SOS)",
+      "status": "added",
+      "change_reason": "New - for abdominal cramps",
+      "flag": null
+    },
+    {
+      "name": "[Unknown medication]",
+      "dose": "[illegible]",
+      "route": "oral",
+      "frequency": "twice daily",
+      "status": "added",
+      "change_reason": "[Cannot determine \u2014 page 2 partially illegible]",
+      "flag": "FLAGGED \u2014 medication partially illegible, requires clinician verification"
+    },
+    {
+      "name": "Thyroid medication (home medication)",
+      "dose": "[unknown \u2014 not documented]",
+      "route": "oral",
+      "frequency": "[unknown]",
+      "status": "stopped",
+      "change_reason": "[NO DOCUMENTATION \u2014 patient documented as K/C/O Thyroid disorder on treatment but NO thyroid medication on discharge list]",
+      "flag": "CRITICAL \u2014 ESCALATED: Possible inadvertent omission of home thyroid medication. Requires immediate clinician review."
+    }
+  ],
+  "allergies": {
+    "value": null,
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "follow_up": {
+    "value": "1. Review immediately in case of fever, loose stools, vomiting, or fatigue; 2. Scheduled follow-up on 09.05.2026 with CBC; 3. Urine culture result to be reviewed at follow-up",
+    "status": "FOUND",
+    "source": "page 2",
+    "flag_reason": null
+  },
+  "pending_results": {
+    "value": "Urine Culture and Sensitivity \u2014 sent, result awaited at discharge",
+    "status": "PENDING",
+    "source": "pages 1, 2",
+    "flag_reason": null
+  },
+  "discharge_condition": {
+    "value": "Hemodynamically stable (discharged at request against medical advice for further management)",
+    "status": "FOUND",
+    "source": "page 2",
+    "flag_reason": null
+  },
+  "clinician_flags": [
+    "\u26a0\ufe0f MISSING: Allergies \u2014 nursing notes field illegible, requires verification.",
+    "\u2139\ufe0f INCIDENTAL FINDINGS: Cholelithiasis (13.3mm) without cholecystitis noted on USG \u2014 may require outpatient surgical evaluation.",
+    "\u26a0\ufe0f PENDING RESULT: Urine culture and sensitivity awaited \u2014 Patient discharged before result available. Ensure follow-up plan for culture result and antibiotic adjustment if needed.",
+    "\u26a0\ufe0f MISSING: Discharge date not documented.",
+    "\u26a0\ufe0f MEDICATION: One discharge medication on page 2 is partially illegible \u2014 requires clinician verification.",
+    "\u26a0\ufe0f CRITICAL: Thyroid medication potentially omitted from discharge \u2014 Patient documented as 'K/C/O Thyroid disorder on treatment' (page 1) but NO thyroid medication on discharge list (page 2). Admission medication charts illegible. VERIFY AND ADD HOME THYROID MEDICATION.",
+    "\u26a0\ufe0f DISCHARGE AT REQUEST: Patient discharged against advice for further management. Document risks explained and patient/attender acknowledgment.",
+    "[MISSING] admission_date: Admission date not clearly documented. Page 16 shows partial date but illegible.",
+    "[MISSING] discharge_date: Discharge date not found. Follow-up date mentioned as 09.05.2026 on page 2.",
+    "[MISSING] allergies: Nursing notes mention 'Known Drug Allergies' field but content illegible due to OCR quality on pages 17-19.",
+    "[ESCALATED] pending_results - Urine culture: Urine culture and sensitivity sent but result awaited at time of discharge (documented on pages 1 and 2). Patient discharged at request before result available. Need follow-up plan for culture result.",
+    "[MISSING] demographics: Patient name, age, gender not found in any reviewed documents. Discharge checklist (page 24) has placeholders but no actual values.",
+    "\u26a0\ufe0f MISSING: Demographics (name, age, gender) not found in available documents.",
+    "[ESCALATED] discharge_medications - Thyroid medication: Patient documented as 'K/C/O Thyroid disorder on treatment' on admission (page 1), but NO thyroid medication appears on discharge medication list (page 2). Admission medication charts (pages 42-45) are illegible. CRITICAL: Thyroid medication may have been inadvertently omitted from discharge. Requires clinician verification.",
+    "\u26a0\ufe0f MISSING: Admission date not documented legibly.",
+    "[ESCALATED] discharge_disposition: Patient discharged at request (DAMA/LAMA) - documented as 'attenders not willing to stay for further management' (page 2). Requires documentation of risks explained and patient/attender acknowledgment."
+  ]
+}

@@ -1,0 +1,289 @@
+[
+  {
+    "patient_id": "PATIENT_2",
+    "field": "demographics",
+    "reason": "Unable to find demographics information in the provided documents",
+    "timestamp": "2026-06-03T00:21:24",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "admission_date",
+    "reason": "Unable to find admission date information in the provided documents",
+    "timestamp": "2026-06-03T00:21:24",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "discharge_date",
+    "reason": "Unable to find discharge date information in the provided documents",
+    "timestamp": "2026-06-03T00:21:24",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "principal_diagnosis",
+    "reason": "Unable to find principal diagnosis information in the provided documents",
+    "timestamp": "2026-06-03T00:21:24",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "secondary_diagnoses",
+    "reason": "Unable to find secondary diagnoses information in the provided documents",
+    "timestamp": "2026-06-03T00:21:24",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "hospital_course",
+    "reason": "Unable to find hospital course information in the provided documents",
+    "timestamp": "2026-06-03T00:21:25",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "procedures",
+    "reason": "Unable to find procedures information in the provided documents",
+    "timestamp": "2026-06-03T00:21:25",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "discharge_medications",
+    "reason": "Unable to find discharge medications information in the provided documents",
+    "timestamp": "2026-06-03T00:21:25",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "allergies",
+    "reason": "Unable to find allergies information in the provided documents",
+    "timestamp": "2026-06-03T00:21:25",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "follow_up",
+    "reason": "Unable to find follow-up information in the provided documents",
+    "timestamp": "2026-06-03T00:21:25",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "pending_results",
+    "reason": "Unable to find pending results information in the provided documents",
+    "timestamp": "2026-06-03T00:21:25",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "discharge_condition",
+    "reason": "Unable to find discharge condition information in the provided documents",
+    "timestamp": "2026-06-03T00:21:25",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "field": "discharge_medications",
+    "reason": "Patient documented as 'K/C/O Thyroid disorder on treatment' (page 1), but no thyroid medication (e.g., levothyroxine) appears in the discharge medication list (page 2). Requires clinician confirmation whether thyroid medication should be continued and added to discharge list, or if there is documentation of discontinuation.",
+    "timestamp": "2026-06-03T00:48:36",
+    "status": "escalated_for_clinician_review"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "field": "admission_medications",
+    "reason": "Admission medication list not clearly documented in available pages. Medication charts (pages 42-45) are poorly scanned and illegible. Cannot perform full medication reconciliation between admission and discharge.",
+    "timestamp": "2026-06-03T00:48:36",
+    "status": "escalated_for_clinician_review"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "field": "pending_results",
+    "reason": "Urine culture and sensitivity reported as 'sent - report awaited' (page 1 and page 2). Patient being discharged at request before results available. Antibiotic coverage may need adjustment once results return. Ensure follow-up plan includes review of pending culture results.",
+    "timestamp": "2026-06-03T00:48:36",
+    "status": "escalated_for_clinician_review"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "Overall Documentation",
+    "reason": "The source documents (pages 46-70) are primarily handwritten records with poor legibility. Multiple critical fields cannot be reliably extracted including: demographics, admission/discharge dates, complete medication lists, procedures, follow-up instructions, and discharge condition. Clinician review of original records is required to complete this discharge summary.",
+    "timestamp": "2026-06-03T00:50:03",
+    "status": "escalated_for_clinician_review"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "principal_diagnosis",
+    "reason": "Multiple diagnoses mentioned across different consultation notes without clear principal diagnosis designation: DKA (pages 54, 56, 58), Acute pyelonephritis (pages 51, 58), Uncontrolled Type 2 DM (pages 56, 58), Cholecystitis (page 48). Clinician must clarify which is the principal diagnosis vs secondary diagnoses.",
+    "timestamp": "2026-06-03T00:50:03",
+    "status": "escalated_for_clinician_review"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "medication_reconciliation",
+    "reason": "Unable to perform medication reconciliation as no legible admission or discharge medication lists were found in the available documents. Page 46 mentions prior history of medication use but specific drugs not legible. This is a critical safety gap.",
+    "timestamp": "2026-06-03T00:50:03",
+    "status": "escalated_for_clinician_review"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "field": "admission_medications",
+    "reason": "Patient has documented history of thyroid disorder on treatment (page 1), but specific thyroid medication is not documented. This medication is not included in the discharge medication list - unclear if it should be continued. Requires clinician verification.",
+    "timestamp": "2026-06-03T00:51:01",
+    "status": "escalated_for_clinician_review"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "Overall Documentation Quality",
+    "reason": "CRITICAL: Source documents are handwritten with poor scan quality rendering most clinical information illegible. Cannot extract: demographics, admission/discharge dates, complete medication list, procedures, hospital course details, follow-up instructions, or discharge condition. Manual clinician review of original documents required before discharge summary can be completed. Medication reconciliation and drug interaction check could not be performed due to illegible medication records.",
+    "timestamp": "2026-06-03T00:52:26",
+    "status": "escalated_for_clinician_review"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "field": "discharge_medications",
+    "reason": "Patient has documented history of thyroid disorder on treatment (per admission note page 1), but no thyroid medication is included in discharge medications. Home thyroid medication appears to have been stopped/omitted without documented reason. Requires clinician verification - is thyroid medication to be continued?",
+    "timestamp": "2026-06-03T02:00:17",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "field": "Thyroid medication omission",
+    "reason": "CRITICAL: Patient is documented as K/C/O thyroid disorder on treatment, but NO thyroid medication is included in discharge medications. This appears to be an unintentional omission with no documented rationale for discontinuation. Home thyroid medication details are also missing from admission records.",
+    "timestamp": "2026-06-03T02:21:18",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "field": "Serum Sodium discrepancy",
+    "reason": "CONFLICT: Serum sodium values differ between sources - page 1 clinical note states 125.00 mmol/L, but page 28 ABG report shows 114 mmol/L. Both values indicate hyponatremia but severity differs significantly. Requires clarification for accurate documentation.",
+    "timestamp": "2026-06-03T02:21:18",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "field": "Incomplete ENTRO dosing",
+    "reason": "TAB. ENTRO dosing information is incomplete/illegible in discharge instructions. Dose and frequency need to be specified for patient safety.",
+    "timestamp": "2026-06-03T02:21:18",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "field": "Thyroid medication continuation",
+    "reason": "Patient is documented as K/C/O (Known Case Of) Thyroid disorder on treatment, but thyroid medication is NOT included in discharge medications. No documentation found explaining discontinuation of chronic thyroid medication. Requires clinician verification.",
+    "timestamp": "2026-06-03T02:28:38",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "field": "Serum Sodium conflict",
+    "reason": "CONFLICT detected: Page 1 documents serum sodium as 125.00 mmol/L, but page 28 ABG report shows sodium as 114 mmol/L (severely low). Both values indicate hyponatremia but with significant discrepancy. Requires clinician review to clarify which is accurate and ensure appropriate management.",
+    "timestamp": "2026-06-03T02:28:38",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "discharge_documentation",
+    "reason": "CRITICAL: No DISCHARGE_DOC, MEDICATION_CHART, or LAB_RESULT pages found in patient chart. Unable to perform medication reconciliation or document discharge medications. Discharge summary cannot be safely completed without these documents.",
+    "timestamp": "2026-06-03T02:31:00",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "field": "discharge_medications",
+    "reason": "Patient has documented history of thyroid disorder on treatment (home thyroid medication), but thyroid medication is NOT included in discharge medication list. No discontinuation documented. Per learned corrections: chronic home medications should NOT be marked as STOPPED unless explicitly discontinued - CONTINUATION REQUIRED. Clinician must clarify if thyroid medication should be continued at discharge.",
+    "timestamp": "2026-06-03T02:33:30",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "field": "Discharge Medications - Thyroid medication",
+    "reason": "Patient documented as 'K/C/O Thyroid disorder on treatment' at admission (page 1), but no thyroid medication appears on the discharge medication list (page 2). Home thyroid medication not documented specifically at admission, and continuation/discontinuation at discharge not addressed. Requires clinician review to confirm if thyroid medication should be continued.",
+    "timestamp": "2026-06-03T02:41:08",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "field": "Pending Results - Urine Culture and Sensitivity",
+    "reason": "Urine culture and sensitivity was sent but result is still awaited at time of discharge. Patient has documented UTI and was on IV antibiotics. Follow-up plan should include review of culture results to ensure appropriate antibiotic coverage. Patient discharged at request before results available.",
+    "timestamp": "2026-06-03T02:41:20",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "discharge_medications",
+    "reason": "CRITICAL: No MEDICATION_CHART or DISCHARGE_DOC found in patient records. Unable to perform medication reconciliation. Discharge medication list must be provided by clinician.",
+    "timestamp": "2026-06-03T02:43:45",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "discharge_documentation",
+    "reason": "CRITICAL: No discharge documentation available. Missing discharge date, discharge condition, follow-up instructions, and discharge medications. Clinician input required for all discharge-related fields.",
+    "timestamp": "2026-06-03T02:43:45",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "field": "discharge_medications - Thyroid medication",
+    "reason": "Patient documented as 'K/C/O Thyroid disorder on treatment' on admission (page 1), but NO thyroid medication appears on discharge medication list (page 2). Admission medication charts (pages 42-45) are illegible. CRITICAL: Thyroid medication may have been inadvertently omitted from discharge. Requires clinician verification.",
+    "timestamp": "2026-06-03T02:46:10",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "field": "pending_results - Urine culture",
+    "reason": "Urine culture and sensitivity sent but result awaited at time of discharge (documented on pages 1 and 2). Patient discharged at request before result available. Need follow-up plan for culture result.",
+    "timestamp": "2026-06-03T02:46:10",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "field": "discharge_disposition",
+    "reason": "Patient discharged at request (DAMA/LAMA) - documented as 'attenders not willing to stay for further management' (page 2). Requires documentation of risks explained and patient/attender acknowledgment.",
+    "timestamp": "2026-06-03T02:46:10",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "discharge_medications",
+    "reason": "CRITICAL: No MEDICATION_CHART or DISCHARGE_DOC found in patient record. Clinician must provide complete admission and discharge medication lists for safe discharge. Unable to perform medication reconciliation without source documentation.",
+    "timestamp": "2026-06-03T02:48:37",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "hospital_course",
+    "reason": "Handwritten clinical notes are largely illegible. Unable to accurately extract detailed hospital course. Clinician review required to document: (1) admission vitals, (2) DKA management details, (3) pyelonephritis treatment course, (4) glycemic control measures, (5) discharge disposition.",
+    "timestamp": "2026-06-03T02:48:45",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "field": "serum_sodium_level",
+    "reason": "CONFLICT: Serum sodium documented as 125.00 mmol/L in hospital course (page 1) but ABG report (page 28) shows 114 mmol/L. Both values indicate hyponatremia but severity differs significantly (mild vs severe). Clinician must clarify which value is correct and whether different timepoints or sampling errors.",
+    "timestamp": "2026-06-03T02:51:16",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "field": "medication_reconciliation",
+    "reason": "Unable to perform medication reconciliation. Admission medication list could not be extracted from medication charts (pages 42-45) due to illegible OCR. Clinician must manually verify: (1) What medications patient was on at admission, (2) Whether discharge medications represent additions/changes/continuations. Home thyroid medication for known thyroid disorder not specified in discharge list.",
+    "timestamp": "2026-06-03T02:51:16",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_1",
+    "field": "discharge_against_advice",
+    "reason": "Patient discharged at request - documentation states 'Patient was adviced to stay back for further management but attenders not willing to the same, hence being discharged at request'. Urine culture pending. Clinician should document informed consent for discharge against medical advice and ensure appropriate safety-netting.",
+    "timestamp": "2026-06-03T02:51:16",
+    "status": "escalated"
+  },
+  {
+    "patient_id": "PATIENT_2",
+    "field": "discharge_medications",
+    "reason": "CRITICAL: No MEDICATION_CHART or DISCHARGE_DOC found. Patient has documented DKA and Type 2 DM - insulin regimen and diabetic medications MUST be documented. Also has acute pyelonephritis - antibiotic therapy must be specified. Clinician must provide complete medication reconciliation.",
+    "timestamp": "2026-06-03T02:53:41",
+    "status": "escalated"
+  }
+]

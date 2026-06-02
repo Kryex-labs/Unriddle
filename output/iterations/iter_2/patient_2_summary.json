@@ -1,0 +1,103 @@
+{
+  "patient_id": "PATIENT_2",
+  "demographics": {
+    "value": null,
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "admission_date": {
+    "value": null,
+    "status": "MISSING",
+    "source": "page 56 (partial/unclear)",
+    "flag_reason": null
+  },
+  "discharge_date": {
+    "value": null,
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "principal_diagnosis": {
+    "value": "Diabetic Ketoacidosis (DKA) \u2014 [requires clinician to document resolution status]",
+    "status": "FOUND",
+    "source": "pages 54, 56, 58",
+    "flag_reason": null
+  },
+  "secondary_diagnoses": {
+    "value": "Type 2 Diabetes Mellitus \u2014 uncontrolled; Acute Pyelonephritis \u2014 [requires clinician to document resolution status]; Cholecystitis \u2014 [requires clinician verification if applicable]",
+    "status": "FOUND",
+    "source": "pages 48, 51, 56, 58",
+    "flag_reason": null
+  },
+  "hospital_course": {
+    "value": null,
+    "status": "MISSING",
+    "source": "pages 46-58 (partially legible)",
+    "flag_reason": null
+  },
+  "procedures": {
+    "value": null,
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "discharge_medications": [
+    {
+      "name": "[MISSING \u2014 No medication chart or discharge documentation available]",
+      "dose": null,
+      "route": null,
+      "frequency": null,
+      "status": "MISSING",
+      "change_reason": null,
+      "flag": "[!] CRITICAL: No MEDICATION_CHART or DISCHARGE_DOC found. Clinician must provide complete discharge medication list. Format required: Drug (Brand) Dose Route Frequency \u2014 [STATUS: NEW/CONTINUED/MODIFIED/CEASED]\n\n[!] NOTE: Patient has known Type 2 Diabetes and DKA \u2014 ensure documentation of:\n\u2022 Basal insulin (type, dose, timing)\n\u2022 Bolus/prandial insulin (if applicable)\n\u2022 Oral hypoglycaemic agents (if any)\n\u2022 Antibiotic therapy for acute pyelonephritis (drug, dose, duration, route)"
+    }
+  ],
+  "allergies": {
+    "value": "No Known Drug Allergies (NKDA)",
+    "status": "FOUND",
+    "source": "pages 46, 49, 50, 51, 52, 55, 56, 57",
+    "flag_reason": null
+  },
+  "follow_up": {
+    "value": null,
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "pending_results": {
+    "value": null,
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "discharge_condition": {
+    "value": null,
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "clinician_flags": [
+    "MISSING: Pending lab results unknown - no LAB_RESULT pages available",
+    "MISSING: Discharge condition not documented",
+    "MISSING: Procedures - possible cholecystectomy mentioned but illegible, requires verification",
+    "[MISSING] admission_date: Admission date not clearly legible in available documents. Only partial date reference 02/03/20 found on consultation sheet page 56.",
+    "MISSING: Discharge date not documented",
+    "[MISSING] demographics: Patient demographics (name, age, sex, MRN) not clearly documented in available pages.",
+    "MISSING: Admission vitals partially visible but illegible - requires documentation",
+    "[MISSING] follow_up: No discharge documentation with follow-up instructions found.",
+    "NOTE: Source documents appear to be poor quality scans or handwritten notes with significant legibility issues - clinician review of original records recommended",
+    "MISSING: Hospital course details largely illegible - clinician must document treatment course, response to therapy, and discharge readiness",
+    "[MISSING] discharge_medications: No MEDICATION_CHART or DISCHARGE_DOC pages found in document index. Cannot extract admission or discharge medication lists. Patient has Type 2 DM and DKA - critical to document diabetic medications.",
+    "MISSING: Admission date not clearly documented - partial date '02/03/20' found but requires verification",
+    "[MISSING] pending_results: No LAB_RESULT pages in document index. Unable to determine if any results are pending.",
+    "[MISSING] admission_vitals: Admission vitals partially visible on page 47 but not fully legible (PR, BP, RR, SpO2, Temp mentioned but values unclear). Requires clinician input.",
+    "MISSING: Follow-up instructions not documented",
+    "[MISSING] procedures: No clear procedure documentation found. Possible cholecystectomy mentioned but illegible - requires clinician verification.",
+    "CRITICAL ESCALATION: No MEDICATION_CHART or DISCHARGE_DOC found in patient records. Patient has DKA and Type 2 DM - insulin regimen and diabetic medications MUST be documented. Patient also has acute pyelonephritis - antibiotic therapy must be specified. Complete medication reconciliation required.",
+    "[ESCALATED] discharge_medications: CRITICAL: No MEDICATION_CHART or DISCHARGE_DOC found. Patient has documented DKA and Type 2 DM - insulin regimen and diabetic medications MUST be documented. Also has acute pyelonephritis - antibiotic therapy must be specified. Clinician must provide complete medication reconciliation.",
+    "MISSING: Demographics not found - clinician must provide patient name, age, sex, MRN",
+    "[MISSING] discharge_date: No discharge documentation found in available records.",
+    "[MISSING] discharge_condition: No discharge documentation found in available records."
+  ]
+}

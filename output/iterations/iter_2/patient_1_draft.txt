@@ -1,0 +1,47 @@
+======================================================================
+DISCHARGE SUMMARY DRAFT — PATIENT_1
+[!]  THIS IS A DRAFT FOR CLINICIAN REVIEW — NOT FINAL
+======================================================================
+DEMOGRAPHICS       : [MISSING — requires clinician review]
+ADMISSION DATE     : [MISSING — requires clinician review]
+DISCHARGE DATE     : [MISSING — requires clinician review]
+PRINCIPAL DIAGNOSIS: Acute Gastroenteritis with Dehydration — [requires clinician to document resolution status]  [src: page 1]
+SECONDARY DX       : Urinary Tract Infection — treated, culture pending; Thyroid disorder — known case, on treatment; Hyponatremia — [CONFLICT: 125 vs 114 mmol/L, requires clinician clarification]; Acute Kidney Injury — resolved (creatinine 1.65 → 0.85 mg/dL); Grade I Fatty Liver — incidental finding on USG; Cholelithiasis — incidental finding, no cholecystitis; Minimal ascites — noted on USG; Minimal right pleural effusion with subsegmental lung consolidation — noted on USG  [src: pages 1, 2, 27, 28, 30]
+
+HOSPITAL COURSE:
+[MISSING — requires clinician review]
+
+PROCEDURES         : USG Abdomen and Pelvis (Bedside), ABG with Lactate, Urine Routine, Stool Routine, CBC, Serum Electrolytes, Serum Creatinine, TSH, Free T4, Urine Culture (pending)  [src: pages 1, 2, 27, 28, 30]
+
+DISCHARGE MEDICATIONS:
+  • Ractiper (Rabeprazole) 40mg oral 1-0-0 (once daily before food) [ADDED]  [!] [!] Unable to confirm if NEW or CONTINUED - admission medications illegible
+  • Emeset (Ondansetron) 4mg oral 1-0-1 (twice daily) [ADDED]  [!] [!] Unable to confirm if NEW or CONTINUED - admission medications illegible
+  • M Strong (Probiotic) Not specified oral 1-0-0 (once daily) [ADDED]  [!] [!] Unable to confirm if NEW or CONTINUED - admission medications illegible
+  • Entrocool Not specified oral 1-0-1 (twice daily) [ADDED]  [!] [!] Unable to confirm if NEW or CONTINUED - admission medications illegible
+  • Meftal Spas Not specified oral SOS [ADDED]  [!] [!] Unable to confirm if NEW or CONTINUED - admission medications illegible
+
+ALLERGIES          : [MISSING — requires clinician review]
+FOLLOW-UP          : 1. Review on 09.05.2026 with CBC
+2. Review immediately in case of fever, loose stools, vomiting, or fatigue
+3. Urine culture and sensitivity report awaited - to be reviewed  [src: page 2]
+PENDING RESULTS    : [PENDING — result not yet available]
+DISCHARGE CONDITION: Hemodynamically stable. [!] NOTE: Discharged at patient/attendant request against medical advice - was advised to stay for further management  [src: page 2]
+
+CLINICIAN FLAGS (require review):
+  [!]  [MISSING] discharge_date: Discharge date not found in readable documents. Follow-up is 09.05.2026 which may indicate discharge shortly before this date.
+  [!]  GLYCOSURIA NOTED: Urine shows sugar 1.5% present (page 27). Consider screening for diabetes if not already known. No diabetes medications on discharge list - verify if required.
+  [!]  [MISSING] demographics: Patient age and gender not found in readable documents. Discharge checklist (page 24) has fields for age/gender but values not captured.
+  [!]  MEDICATION RECONCILIATION INCOMPLETE: Admission medication charts (pages 42-45) illegible due to poor OCR quality. Cannot confirm whether discharge medications are NEW/CONTINUED/MODIFIED. Clinician must manually reconcile.
+  [!]  [MISSING] admission_medications: Medication charts (pages 42-45) are illegible due to poor OCR quality. Cannot extract admission medication list for reconciliation.
+  [!]  MISSING DEMOGRAPHICS: Patient age, gender, and identifying information not extractable from available documents.
+  [!]  [ESCALATED] serum_sodium_level: CONFLICT: Serum sodium documented as 125.00 mmol/L in hospital course (page 1) but ABG report (page 28) shows 114 mmol/L. Both values indicate hyponatremia but severity differs significantly (mild vs severe). Clinician must clarify which value is correct and whether different timepoints or sampling errors.
+  [!]  CONFLICT: Serum sodium values differ - 125.00 mmol/L (page 1 narrative) vs 114 mmol/L (page 28 ABG). Both indicate hyponatremia but severity differs significantly. Requires clarification.
+  [!]  [ESCALATED] medication_reconciliation: Unable to perform medication reconciliation. Admission medication list could not be extracted from medication charts (pages 42-45) due to illegible OCR. Clinician must manually verify: (1) What medications patient was on at admission, (2) Whether discharge medications represent additions/changes/continuations. Home thyroid medication for known thyroid disorder not specified in discharge list.
+  [!]  MISSING HOME THYROID MEDICATION: Patient has known thyroid disorder on treatment, but no thyroid medication appears on discharge medication list. Clinician must verify if thyroid medication should be continued.
+  [!]  DISCHARGE AGAINST MEDICAL ADVICE: Patient discharged at request despite advice to stay for further management. Urine culture pending. Ensure informed consent documented and appropriate safety-netting in place.
+  [!]  [MISSING] allergies: Nursing notes mention 'Known Drug Allergies' field but the actual allergies are not readable due to poor document quality.
+  [!]  [ESCALATED] discharge_against_advice: Patient discharged at request - documentation states 'Patient was adviced to stay back for further management but attenders not willing to the same, hence being discharged at request'. Urine culture pending. Clinician should document informed consent for discharge against medical advice and ensure appropriate safety-netting.
+  [!]  MISSING ALLERGIES: Drug allergy information not readable from nursing documentation.
+  [!]  [MISSING] admission_date: Admission date not clearly documented in readable format. Nursing assessment (page 16) has a date field but illegible.
+  [!]  MISSING ADMISSION/DISCHARGE DATES: Exact dates not found in readable format.
+======================================================================

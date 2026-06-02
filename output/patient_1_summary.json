@@ -1,0 +1,139 @@
+{
+  "patient_id": "PATIENT_1",
+  "demographics": {
+    "value": "[MISSING \u2014 requires clinician input]",
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "admission_date": {
+    "value": "[MISSING \u2014 requires clinician input]",
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "discharge_date": {
+    "value": "[MISSING \u2014 requires clinician input]",
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "principal_diagnosis": {
+    "value": "Acute Gastroenteritis with Dehydration",
+    "status": "FOUND",
+    "source": "page 1",
+    "flag_reason": null
+  },
+  "secondary_diagnoses": {
+    "value": "1) Urinary Tract Infection, 2) Known case of Thyroid disorder on treatment, 3) Grade I Fatty Liver, 4) Cholelithiasis without cholecystitis (incidental finding on USG)",
+    "status": "FOUND",
+    "source": "pages 1, 30",
+    "flag_reason": null
+  },
+  "hospital_course": {
+    "value": "Patient presented with multiple episodes of loose stools, 2-3 episodes of vomiting, fatigue for 3 days, and fever since the previous day. Initially treated at local clinic before admission. On evaluation, initial investigations showed normal CBC. Serum creatinine was elevated (1.65 mg/dL). Serum electrolytes showed low sodium (125.00 mmol/L). Urine routine showed ketone bodies (+), 10-12/hpf pus cells, 13-20/hpf epithelial cells with presence of bacteria - urine culture and sensitivity was sent (report awaited). Patient was treated with IV fluids, IV antibiotics, IV PPIs, IV antiemetics and other supportive measures. USG abdomen and pelvis showed Grade-I fatty liver changes and mildly edematous part of ascending colon up to the hepatic flexure (could represent colitis), cholelithiasis without cholecystitis, minimal ascites, and minimal right pleural effusion with underlying subsegmental lung consolidation. Repeat serum creatinine (1.17 mg/dL) normalized. TSH and Free T4 were normal. Stool routine showed 2-3/hpf RBCs and plenty/hpf pus cells. Patient was advised to stay for further management but attenders were not willing, hence discharged at request.",
+    "status": "FOUND",
+    "source": "pages 1, 2, 30",
+    "flag_reason": null
+  },
+  "procedures": {
+    "value": "USG Abdomen and Pelvis (bedside), Arterial Blood Gas with Lactate, Urinary catheterization",
+    "status": "FOUND",
+    "source": "pages 28, 30, 26",
+    "flag_reason": null
+  },
+  "discharge_medications": [
+    {
+      "name": "Rabeprazole (RACTIPER)",
+      "dose": "40mg",
+      "route": "oral",
+      "frequency": "1-0-0 (before food)",
+      "status": "added",
+      "change_reason": "For gastric protection during acute gastroenteritis",
+      "flag": null
+    },
+    {
+      "name": "Ondansetron (EMESET)",
+      "dose": "4mg",
+      "route": "oral",
+      "frequency": "1-0-1",
+      "status": "added",
+      "change_reason": "For nausea/vomiting",
+      "flag": null
+    },
+    {
+      "name": "M STRONG (Multivitamin)",
+      "dose": "1 tablet",
+      "route": "oral",
+      "frequency": "1-0-0",
+      "status": "added",
+      "change_reason": "Nutritional support",
+      "flag": null
+    },
+    {
+      "name": "ENTRO (likely antibiotic)",
+      "dose": "Not clearly legible",
+      "route": "oral",
+      "frequency": "0-0-1",
+      "status": "added",
+      "change_reason": "For UTI/gastroenteritis treatment",
+      "flag": null
+    },
+    {
+      "name": "Mefenamic acid + Dicyclomine (MEFTAL SPAS)",
+      "dose": "1 tablet SOS",
+      "route": "oral",
+      "frequency": "As needed",
+      "status": "added",
+      "change_reason": "For abdominal cramps",
+      "flag": null
+    },
+    {
+      "name": "Thyroid medication (unspecified)",
+      "dose": "[MISSING]",
+      "route": "[MISSING]",
+      "frequency": "[MISSING]",
+      "status": "unchanged",
+      "change_reason": null,
+      "flag": "ESCALATED: Patient has known thyroid disorder on treatment but specific medication not documented in discharge list - requires clinician verification to confirm continuation"
+    }
+  ],
+  "allergies": {
+    "value": "[MISSING \u2014 requires clinician input]",
+    "status": "MISSING",
+    "source": null,
+    "flag_reason": null
+  },
+  "follow_up": {
+    "value": "Review on 09.05.2026 with CBC. Review immediately in case of fever, loose stools, vomiting, or fatigue.",
+    "status": "FOUND",
+    "source": "page 2",
+    "flag_reason": null
+  },
+  "pending_results": {
+    "value": "Urine Culture and Sensitivity - report awaited",
+    "status": "PENDING",
+    "source": "pages 1, 2",
+    "flag_reason": null
+  },
+  "discharge_condition": {
+    "value": "Hemodynamically stable. Discharged at request against medical advice to stay for further management.",
+    "status": "FOUND",
+    "source": "page 2",
+    "flag_reason": null
+  },
+  "clinician_flags": [
+    "[MISSING] admission_date: Admission date referenced on nursing assessment page 16 and discharge checklist page 24 but values are not clearly legible",
+    "MISSING FIELD: Demographics (name, age, gender, IP number) - not legible in documents",
+    "MISSING FIELD: Discharge date - not legible in documents",
+    "[MISSING] discharge_date: Discharge date referenced on discharge checklist page 24 but actual value is not legible",
+    "MISSING FIELD: Admission date - not legible in documents",
+    "[MISSING] allergies: Nursing notes reference 'Known Drug Allergies' field but specific allergies are not legible in pages 17, 18, 19, 20",
+    "[MISSING] demographics: Patient name, age, gender, and IP number are referenced on the discharge checklist (page 24) but actual values are not legible in the available documents",
+    "[ESCALATED] admission_medications: Patient has documented history of thyroid disorder on treatment (page 1), but specific thyroid medication is not documented. This medication is not included in the discharge medication list - unclear if it should be continued. Requires clinician verification.",
+    "ESCALATION: Patient has documented history of thyroid disorder on treatment (page 1), but specific thyroid medication is not documented anywhere in the records. This medication is not included in the discharge medication list - clinician must verify if thyroid medication should be continued and add to discharge medications.",
+    "MISSING FIELD: Allergies - referenced in nursing notes but specific allergies not documented",
+    "CLINICAL NOTE: Patient discharged at request - attenders not willing to stay for further management despite medical advice",
+    "PENDING RESULT: Urine Culture and Sensitivity - result awaited, patient should follow up"
+  ]
+}
