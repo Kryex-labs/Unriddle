@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dscribe AI — Technical Deep Dive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+/* ── Reset ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#07090f;color:#e2e8f0;overflow:hidden;height:100vh;width:100vw}
+
+/* ── Variables ── */
+:root{
+  --bg:#07090f;--bg2:#0d1117;--bg3:#161b26;--bg4:#1e2637;
+  --blue:#3b82f6;--blue2:#60a5fa;--blue3:#93c5fd;
+  --green:#10b981;--green2:#34d399;
+  --amber:#f59e0b;--amber2:#fbbf24;
+  --red:#ef4444;--red2:#f87171;
+  --violet:#8b5cf6;--violet2:#a78bfa;
+  --slate:#64748b;--slate2:#94a3b8;--slate3:#cbd5e1;
+  --white:#f8fafc;
+  --border:rgba(255,255,255,0.08);
+  --border2:rgba(59,130,246,0.25);
+}
+
+/* ── Layout ── */
+#app{display:flex;height:100vh;width:100vw;overflow:hidden}
+
+/* ── Sidebar ── */
+#sidebar{
+  width:260px;min-width:260px;height:100vh;
+  background:var(--bg2);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  overflow:hidden;z-index:10;
+}
+#sidebar-header{
+  padding:20px 20px 16px;
+  border-bottom:1px solid var(--border);
+}
+.logo{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.logo-icon{
+  width:32px;height:32px;background:var(--blue);
+  border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex-shrink:0;
+}
+.logo-text{font-size:16px;font-weight:700;color:var(--white)}
+.logo-sub{font-size:11px;color:var(--slate2);font-weight:400}
+#nav{flex:1;overflow-y:auto;padding:12px 8px}
+#nav::-webkit-scrollbar{width:4px}
+#nav::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:4px}
+.nav-section{font-size:10px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.08em;padding:12px 12px 6px}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 12px;border-radius:8px;cursor:pointer;
+  font-size:12.5px;font-weight:500;color:var(--slate2);
+  transition:all .15s ease;position:relative;
+  margin-bottom:2px;
+}
+.nav-item:hover{background:var(--bg3);color:var(--slate3)}
+.nav-item.active{background:rgba(59,130,246,.12);color:var(--blue2)}
+.nav-item.active::before{
+  content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:3px;height:60%;background:var(--blue);border-radius:0 2px 2px 0;
+}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0;opacity:.6}
+.nav-num{
+  margin-left:auto;font-size:10px;font-weight:600;
+  background:var(--bg4);color:var(--slate);
+  padding:1px 6px;border-radius:4px;
+}
+#progress-bar{
+  height:3px;background:var(--bg3);margin:0 12px;
+  border-radius:2px;overflow:hidden;
+}
+#progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--violet));transition:width .4s ease;width:0%}
+#sidebar-footer{padding:12px 16px;border-top:1px solid var(--border)}
+.badge-row{display:flex;gap:6px;flex-wrap:wrap}
+.badge{
+  font-size:10px;font-weight:600;padding:3px 8px;
+  border-radius:5px;border:1px solid;
+}
+.badge-blue{background:rgba(59,130,246,.1);color:var(--blue2);border-color:rgba(59,130,246,.25)}
+.badge-green{background:rgba(16,185,129,.1);color:var(--green2);border-color:rgba(16,185,129,.25)}
+.badge-violet{background:rgba(139,92,246,.1);color:var(--violet2);border-color:rgba(139,92,246,.25)}
+
+/* ── Main ── */
+#main{flex:1;overflow:hidden;position:relative;display:flex;flex-direction:column}
+#page-container{flex:1;overflow:hidden;position:relative}
+.page{
+  position:absolute;inset:0;overflow-y:auto;
+  padding:40px 48px;
+  opacity:0;transform:translateX(40px);
+  transition:opacity .35s ease,transform .35s ease;
+  pointer-events:none;
+}
+.page.active{opacity:1;transform:translateX(0);pointer-events:all}
+.page.exit-left{opacity:0;transform:translateX(-40px)}
+.page::-webkit-scrollbar{width:6px}
+.page::-webkit-scrollbar-track{background:transparent}
+.page::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:3px}
+
+/* ── Nav bar ── */
+#nav-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;height:56px;
+  background:var(--bg2);border-top:1px solid var(--border);
+  flex-shrink:0;
+}
+.nav-btn{
+  display:flex;align-items:center;gap:8px;
+  background:var(--bg3);border:1px solid var(--border);
+  color:var(--slate2);font-size:13px;font-weight:600;
+  padding:8px 16px;border-radius:8px;cursor:pointer;
+  transition:all .15s ease;
+}
+.nav-btn:hover:not(:disabled){background:var(--bg4);color:var(--white);border-color:var(--blue)}
+.nav-btn:disabled{opacity:.3;cursor:default}
+#page-indicator{
+  font-size:12px;color:var(--slate);font-weight:600;
+  background:var(--bg3);padding:6px 16px;border-radius:8px;
+  border:1px solid var(--border);
+}
+#page-label{color:var(--slate2);font-size:11px;text-align:center;margin-top:2px}
+
+/* ── Typography ── */
+.page-title{
+  font-size:32px;font-weight:800;
+  background:linear-gradient(135deg,var(--white),var(--blue3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:6px;line-height:1.2;
+}
+.page-sub{font-size:15px;color:var(--slate2);margin-bottom:32px;font-weight:400;line-height:1.6}
+h3{font-size:16px;font-weight:700;color:var(--white);margin-bottom:12px}
+h4{font-size:13px;font-weight:700;color:var(--slate3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+p{font-size:14px;color:var(--slate2);line-height:1.7}
+
+/* ── Cards ── */
+.card{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:12px;padding:20px;
+  margin-bottom:16px;
+}
+.card-blue{border-color:var(--border2);background:rgba(59,130,246,.04)}
+.card-green{border-color:rgba(16,185,129,.2);background:rgba(16,185,129,.04)}
+.card-amber{border-color:rgba(245,158,11,.2);background:rgba(245,158,11,.04)}
+.card-red{border-color:rgba(239,68,68,.2);background:rgba(239,68,68,.04)}
+.card-violet{border-color:rgba(139,92,246,.2);background:rgba(139,92,246,.04)}
+.card-row{display:grid;gap:14px}
+.card-2{grid-template-columns:1fr 1fr}
+.card-3{grid-template-columns:1fr 1fr 1fr}
+
+/* ── Code ── */
+pre{
+  background:#0d1117;border:1px solid var(--border);
+  border-radius:10px;padding:16px 18px;
+  font-family:'JetBrains Mono',monospace;font-size:12px;
+  color:#e2e8f0;overflow-x:auto;line-height:1.7;
+  margin-bottom:14px;
+}
+.kw{color:#ff79c6} .fn{color:#50fa7b} .str{color:#f1fa8c}
+.cm{color:#6272a4;font-style:italic} .num{color:#bd93f9}
+.cls{color:#8be9fd} .op{color:#ff6e6e}
+
+/* ── Status chips ── */
+.chip{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:11px;font-weight:700;padding:3px 10px;
+  border-radius:6px;border:1px solid;
+}
+.chip-found{background:rgba(16,185,129,.1);color:var(--green2);border-color:rgba(16,185,129,.25)}
+.chip-missing{background:rgba(245,158,11,.1);color:var(--amber2);border-color:rgba(245,158,11,.25)}
+.chip-conflict{background:rgba(239,68,68,.1);color:var(--red2);border-color:rgba(239,68,68,.25)}
+.chip-pending{background:rgba(59,130,246,.1);color:var(--blue2);border-color:rgba(59,130,246,.25)}
+.chip-escalate{background:rgba(239,68,68,.15);color:#fca5a5;border-color:rgba(239,68,68,.35)}
+
+/* ── Stat boxes ── */
+.stat-box{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:10px;padding:16px;text-align:center;
+}
+.stat-val{font-size:28px;font-weight:800;line-height:1}
+.stat-lbl{font-size:11px;color:var(--slate2);margin-top:5px;font-weight:500}
+.stat-blue .stat-val{color:var(--blue2)}
+.stat-green .stat-val{color:var(--green2)}
+.stat-amber .stat-val{color:var(--amber2)}
+.stat-violet .stat-val{color:var(--violet2)}
+.stat-white .stat-val{color:var(--white)}
+
+/* ── Tag ── */
+.tag{
+  display:inline-block;font-size:11px;font-weight:600;
+  padding:2px 8px;border-radius:5px;
+  background:var(--bg4);color:var(--slate3);
+  border:1px solid var(--border);margin:2px;
+}
+
+/* ── Flow ── */
+.flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:14px 0}
+.flow-step{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:8px;padding:8px 14px;
+  font-size:12px;font-weight:600;color:var(--slate3);
+}
+.flow-arrow{color:var(--blue);font-size:16px;font-weight:700}
+
+/* ── Timeline ── */
+.timeline{position:relative;padding-left:24px;margin:12px 0}
+.timeline::before{
+  content:'';position:absolute;left:6px;top:0;bottom:0;
+  width:2px;background:linear-gradient(to bottom,var(--blue),var(--violet),transparent);
+}
+.tl-item{position:relative;margin-bottom:18px}
+.tl-dot{
+  position:absolute;left:-21px;top:3px;
+  width:10px;height:10px;border-radius:50%;
+  background:var(--blue);border:2px solid var(--bg);
+  box-shadow:0 0 0 3px rgba(59,130,246,.2);
+}
+.tl-title{font-size:13px;font-weight:700;color:var(--white);margin-bottom:4px}
+.tl-body{font-size:12.5px;color:var(--slate2);line-height:1.6}
+
+/* ── Tool card ── */
+.tool-card{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:10px;padding:14px 16px;margin-bottom:10px;
+  border-left:3px solid var(--blue);
+  transition:border-color .2s;
+}
+.tool-card:hover{border-left-color:var(--violet)}
+.tool-name{font-size:13px;font-weight:700;color:var(--blue2);font-family:'JetBrains Mono',monospace;margin-bottom:4px}
+.tool-desc{font-size:12.5px;color:var(--slate2);line-height:1.6}
+.tool-when{font-size:11px;color:var(--slate);margin-top:6px}
+.tool-when strong{color:var(--amber2)}
+
+/* ── Metric bar ── */
+.metric-row{margin-bottom:12px}
+.metric-label{font-size:12px;font-weight:600;color:var(--slate3);margin-bottom:5px;display:flex;justify-content:space-between}
+.metric-bar{height:8px;background:var(--bg4);border-radius:4px;overflow:hidden}
+.metric-fill{height:100%;border-radius:4px;transition:width 1s ease .3s}
+.fill-blue{background:linear-gradient(90deg,var(--blue),var(--blue2))}
+.fill-green{background:linear-gradient(90deg,var(--green),var(--green2))}
+.fill-amber{background:linear-gradient(90deg,var(--amber),var(--amber2))}
+.fill-violet{background:linear-gradient(90deg,var(--violet),var(--violet2))}
+
+/* ── Animations ── */
+@keyframes fadeSlideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes glow{0%,100%{box-shadow:0 0 8px rgba(59,130,246,.3)}50%{box-shadow:0 0 20px rgba(59,130,246,.6)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes countUp{from{opacity:0}to{opacity:1}}
+
+.anim-in{animation:fadeSlideUp .5s ease forwards}
+.anim-delay-1{animation-delay:.1s;opacity:0}
+.anim-delay-2{animation-delay:.2s;opacity:0}
+.anim-delay-3{animation-delay:.3s;opacity:0}
+.anim-delay-4{animation-delay:.4s;opacity:0}
+.anim-delay-5{animation-delay:.5s;opacity:0}
+.glow-blue{animation:glow 3s ease infinite}
+.float{animation:float 4s ease infinite}
+
+/* ── Agent loop SVG ── */
+.loop-container{display:flex;justify-content:center;margin:20px 0}
+
+/* ── Alert ── */
+.alert{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:12px 14px;border-radius:10px;
+  border:1px solid;margin-bottom:12px;
+  font-size:12.5px;line-height:1.6;
+}
+.alert-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.alert-blue{background:rgba(59,130,246,.07);border-color:rgba(59,130,246,.2);color:var(--blue3)}
+.alert-green{background:rgba(16,185,129,.07);border-color:rgba(16,185,129,.2);color:#6ee7b7}
+.alert-amber{background:rgba(245,158,11,.07);border-color:rgba(245,158,11,.2);color:#fde68a}
+.alert-red{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.2);color:#fca5a5}
+
+/* ── Divider ── */
+.divider{height:1px;background:var(--border);margin:20px 0}
+
+/* ── Arch diagram ── */
+.arch-box{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:10px;padding:12px 16px;
+  font-size:12px;font-weight:600;text-align:center;
+}
+.arch-row{display:flex;gap:10px;margin-bottom:10px;align-items:center;justify-content:center}
+.arch-arrow{color:var(--blue);font-size:18px;font-weight:700;flex-shrink:0}
+
+/* ── Scrollbar hide ── */
+.page::-webkit-scrollbar-track{background:var(--bg2)}
+
+/* ── Hero page special ── */
+.hero-center{min-height:calc(100vh - 120px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.hero-title{font-size:52px;font-weight:900;line-height:1.1;margin-bottom:16px}
+.hero-gradient{
+  background:linear-gradient(135deg,#60a5fa,#a78bfa,#34d399);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-desc{font-size:17px;color:var(--slate2);max-width:580px;line-height:1.7;margin-bottom:32px}
+.hero-badges{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:40px}
+.hero-badge{
+  font-size:13px;font-weight:600;padding:7px 16px;
+  border-radius:20px;border:1px solid;
+}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:640px;width:100%}
+
+/* ── Columns ── */
+.col2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.col3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+
+/* ── Table ── */
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:16px}
+th{background:var(--bg4);color:var(--slate3);font-weight:700;padding:9px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+td{padding:9px 14px;color:var(--slate2);border-top:1px solid var(--border)}
+tr:hover td{background:rgba(255,255,255,.02)}
+td code{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--blue2);background:rgba(59,130,246,.1);padding:2px 6px;border-radius:4px}
+
+/* ── Pinecone flow ── */
+.pc-node{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:8px;padding:10px 14px;font-size:12px;font-weight:600;
+  text-align:center;min-width:120px;
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ═══════════════════════ SIDEBAR ═══════════════════════ -->
+<div id="sidebar">
+  <div id="sidebar-header">
+    <div class="logo">
+      <div class="logo-icon">⚕</div>
+      <div>
+        <div class="logo-text">Dscribe AI</div>
+        <div class="logo-sub">Technical Deep Dive</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="nav">
+    <div class="nav-section">Overview</div>
+    <div class="nav-item active" onclick="goTo(0)"><span class="nav-dot"></span>Introduction<span class="nav-num">01</span></div>
+    <div class="nav-item" onclick="goTo(1)"><span class="nav-dot"></span>The Problem & Data<span class="nav-num">02</span></div>
+    <div class="nav-item" onclick="goTo(2)"><span class="nav-dot"></span>OCR Pipeline<span class="nav-num">03</span></div>
+
+    <div class="nav-section">Architecture</div>
+    <div class="nav-item" onclick="goTo(3)"><span class="nav-dot"></span>System Architecture<span class="nav-num">04</span></div>
+    <div class="nav-item" onclick="goTo(4)"><span class="nav-dot"></span>Agent Loop Design<span class="nav-num">05</span></div>
+    <div class="nav-item" onclick="goTo(5)"><span class="nav-dot"></span>All 7 Tools<span class="nav-num">06</span></div>
+
+    <div class="nav-section">Clinical Safety</div>
+    <div class="nav-item" onclick="goTo(6)"><span class="nav-dot"></span>No-Fabrication Guardrail<span class="nav-num">07</span></div>
+    <div class="nav-item" onclick="goTo(7)"><span class="nav-dot"></span>Med Reconciliation<span class="nav-num">08</span></div>
+    <div class="nav-item" onclick="goTo(8)"><span class="nav-dot"></span>Conflict Detection<span class="nav-num">09</span></div>
+
+    <div class="nav-section">Results</div>
+    <div class="nav-item" onclick="goTo(9)"><span class="nav-dot"></span>Patient 1 Output<span class="nav-num">10</span></div>
+    <div class="nav-item" onclick="goTo(10)"><span class="nav-dot"></span>Patient 2 Output<span class="nav-num">11</span></div>
+
+    <div class="nav-section">Part 2 — Learning</div>
+    <div class="nav-item" onclick="goTo(11)"><span class="nav-dot"></span>Learning Loop Design<span class="nav-num">12</span></div>
+    <div class="nav-item" onclick="goTo(12)"><span class="nav-dot"></span>Pinecone + Jina AI<span class="nav-num">13</span></div>
+    <div class="nav-item" onclick="goTo(13)"><span class="nav-dot"></span>Improvement Metrics<span class="nav-num">14</span></div>
+
+    <div class="nav-section">Deployment</div>
+    <div class="nav-item" onclick="goTo(14)"><span class="nav-dot"></span>APIs & Services<span class="nav-num">15</span></div>
+    <div class="nav-item" onclick="goTo(15)"><span class="nav-dot"></span>Live Demo & Links<span class="nav-num">16</span></div>
+  </div>
+
+  <div style="padding:8px 16px">
+    <div id="progress-bar"><div id="progress-fill" style="width:6.25%"></div></div>
+  </div>
+
+  <div id="sidebar-footer">
+    <div class="badge-row">
+      <span class="badge badge-blue">Claude Opus 4.5</span>
+      <span class="badge badge-violet">Pinecone</span>
+      <span class="badge badge-green">Railway</span>
+      <span class="badge badge-blue">Jina AI</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ MAIN ═══════════════════════ -->
+<div id="main">
+<div id="page-container">
+
+<!-- ══════════ PAGE 1: INTRO ══════════ -->
+<div class="page active" id="p0">
+  <div class="hero-center">
+    <div class="anim-in" style="margin-bottom:16px">
+      <span class="badge badge-blue" style="font-size:12px;padding:6px 16px">Take-Home Assignment — Unriddle Technologies</span>
+    </div>
+    <h1 class="hero-title anim-in anim-delay-1">
+      <span class="hero-gradient">Dscribe AI</span><br/>
+      <span style="color:var(--white);font-size:38px">Discharge Summary Agent</span>
+    </h1>
+    <p class="hero-desc anim-in anim-delay-2">
+      An agentic AI system that reads messy clinical source notes and produces structured, clinically-safe discharge summary drafts — with zero fabrication, full conflict detection, and a learning loop that improves from every doctor review.
+    </p>
+    <div class="hero-badges anim-in anim-delay-3">
+      <span class="hero-badge badge-blue">Claude Opus 4.5</span>
+      <span class="hero-badge badge-violet">Pinecone Cloud</span>
+      <span class="hero-badge badge-green" style="background:rgba(16,185,129,.1);color:var(--green2);border-color:rgba(16,185,129,.25)">Jina AI 1024-dim</span>
+      <span class="hero-badge" style="background:rgba(245,158,11,.1);color:var(--amber2);border-color:rgba(245,158,11,.25)">FastAPI + Railway</span>
+      <span class="hero-badge" style="background:rgba(255,255,255,.05);color:var(--slate3);border-color:var(--border)">Next.js + Vercel</span>
+    </div>
+    <div class="hero-stats anim-in anim-delay-4">
+      <div class="stat-box stat-blue"><div class="stat-val">71</div><div class="stat-lbl">PDF Pages Ingested</div></div>
+      <div class="stat-box stat-green"><div class="stat-val">7</div><div class="stat-lbl">Agent Tools</div></div>
+      <div class="stat-box stat-violet"><div class="stat-val">61</div><div class="stat-lbl">Pinecone Vectors</div></div>
+      <div class="stat-box stat-amber"><div class="stat-val">+26%</div><div class="stat-lbl">P1 Improvement</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 2: PROBLEM & DATA ══════════ -->
+<div class="page" id="p1">
+  <div class="page-title anim-in">The Problem & Data</div>
+  <p class="page-sub anim-in anim-delay-1">Real-world clinical documents are messy, incomplete, handwritten, and sometimes contradictory. The system has to handle all of this gracefully.</p>
+
+  <div class="col2 anim-in anim-delay-2">
+    <div class="card card-blue">
+      <h3>📄 The Source Data</h3>
+      <p>A single 71-page PDF containing records for <strong style="color:var(--white)">2 synthetic patients</strong>. Documents include admission notes, progress notes, lab results, medication charts, nursing notes, and discharge checklists.</p>
+      <div class="divider"></div>
+      <div class="flow">
+        <span class="flow-step">Admission Note</span>
+        <span class="flow-step">Progress Notes</span>
+        <span class="flow-step">Lab Results</span>
+        <span class="flow-step">Drug Charts</span>
+        <span class="flow-step">Nursing Notes</span>
+      </div>
+    </div>
+    <div class="card card-amber">
+      <h3>⚠️ Intentional Challenges</h3>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-title">Poor OCR Quality</div><div class="tl-body">Handwritten notes, scanned at low resolution — many pages partially illegible</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-title">Missing Documents</div><div class="tl-body">Patient 2 has no medication chart or discharge doc — agent must handle gracefully</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-title">Data Conflicts</div><div class="tl-body">Sodium level: 125 mmol/L (clinical note) vs 114 mmol/L (ABG report)</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-title">Pending Results</div><div class="tl-body">Urine culture sent but result not available at time of discharge</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-row card-2 anim-in anim-delay-3">
+    <div class="card">
+      <h4>🫁 Patient 1</h4>
+      <p style="margin-bottom:10px"><strong style="color:var(--white)">Acute Gastroenteritis + UTI + Thyroid disorder</strong></p>
+      <div><span class="tag">Gastroenteritis</span><span class="tag">UTI</span><span class="tag">K/C/O Thyroid</span><span class="tag">Grade-I Fatty Liver</span><span class="tag">Cholelithiasis</span></div>
+      <div class="divider"></div>
+      <p><span class="chip chip-conflict">CONFLICT</span> Sodium 125 vs 114 mmol/L across two documents</p>
+    </div>
+    <div class="card">
+      <h4>💉 Patient 2</h4>
+      <p style="margin-bottom:10px"><strong style="color:var(--white)">DKA + Uncontrolled T2DM + Acute Pyelonephritis</strong></p>
+      <div><span class="tag">DKA</span><span class="tag">T2DM</span><span class="tag">Pyelonephritis</span><span class="tag">Cholecystitis</span></div>
+      <div class="divider"></div>
+      <p><span class="chip chip-missing">MISSING</span> No medication chart or discharge documentation</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 3: OCR ══════════ -->
+<div class="page" id="p2">
+  <div class="page-title anim-in">OCR Pipeline</div>
+  <p class="page-sub anim-in anim-delay-1">The PDF is fully image-based (scanned). Standard text extraction returns nothing. We built a page-by-page OCR pipeline to extract clinical text.</p>
+
+  <div class="col2 anim-in anim-delay-2">
+    <div>
+      <h3>Why page-by-page?</h3>
+      <div class="alert alert-amber"><span class="alert-icon">⚠️</span><span>First attempt: converted all 71 pages at 300 DPI simultaneously → <strong>MemoryError</strong> (18GB RAM exceeded). Fixed by processing one page at a time at 200 DPI.</span></div>
+      <div class="card">
+        <h4>Tools Used</h4>
+        <table>
+          <tr><th>Library</th><th>Role</th></tr>
+          <tr><td><code>pdf2image</code></td><td>Convert PDF pages → PIL images</td></tr>
+          <tr><td><code>pytesseract</code></td><td>OCR engine (Tesseract 5.4)</td></tr>
+          <tr><td><code>pypdf</code></td><td>Get page count</td></tr>
+          <tr><td><code>pdfplumber</code></td><td>Extract tables (fallback)</td></tr>
+        </table>
+        <div class="alert alert-blue"><span class="alert-icon">💾</span><span>Progress saved to JSON after every page — if it crashes, resumes from last checkpoint.</span></div>
+      </div>
+    </div>
+    <div>
+      <h3>Pipeline Code</h3>
+<pre><span class="kw">for</span> page_num <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, total + <span class="num">1</span>):
+    <span class="cm"># Convert single page — low memory</span>
+    images = <span class="fn">convert_from_path</span>(
+        PDF_PATH,
+        dpi=<span class="num">200</span>,
+        first_page=page_num,
+        last_page=page_num,
+    )
+    <span class="cm"># Run Tesseract OCR</span>
+    raw_text = pytesseract.<span class="fn">image_to_string</span>(
+        images[<span class="num">0</span>], lang=<span class="str">'eng'</span>
+    )
+    <span class="kw">del</span> images  <span class="cm"># free memory immediately</span>
+
+    <span class="cm"># Save progress checkpoint</span>
+    <span class="fn">save_progress</span>(page_num, raw_text)</pre>
+      <div class="card card-green">
+        <h4>Results</h4>
+        <div class="card-row card-3">
+          <div class="stat-box stat-green"><div class="stat-val">71</div><div class="stat-lbl">Total Pages</div></div>
+          <div class="stat-box stat-blue"><div class="stat-val">53</div><div class="stat-lbl">Pages with text</div></div>
+          <div class="stat-box stat-white"><div class="stat-val">22K</div><div class="stat-lbl">Characters extracted</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card anim-in anim-delay-3">
+    <h4>Output Structure</h4>
+    <pre>{
+  <span class="str">"source"</span>: <span class="str">"patient_data.pdf"</span>,
+  <span class="str">"total_pages"</span>: <span class="num">71</span>,
+  <span class="str">"pages"</span>: [
+    { <span class="str">"page"</span>: <span class="num">1</span>, <span class="str">"text"</span>: <span class="str">"DIAGNOSIS:\n1) ACUTE GASTROENTERITIS WITH DEHYDRATION\n2) URINARY TRACT INFECTION\n\nHISTORY: C/O Multiple episodes..."</span> },
+    { <span class="str">"page"</span>: <span class="num">2</span>, <span class="str">"text"</span>: <span class="str">"IV antibiotics, IV PPIs, IV antiemetics and other supportive measures. USG abdomen..."</span> },
+    <span class="cm">// ... 71 pages total</span>
+  ]
+}</pre>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 4: ARCHITECTURE ══════════ -->
+<div class="page" id="p3">
+  <div class="page-title anim-in">System Architecture</div>
+  <p class="page-sub anim-in anim-delay-1">Full stack: Python FastAPI backend on Railway, Next.js frontend on Vercel, Pinecone cloud vector DB, Azure-hosted Claude Opus 4.5.</p>
+
+  <div class="anim-in anim-delay-2">
+    <div class="arch-row">
+      <div class="arch-box" style="border-color:rgba(255,255,255,.15);color:var(--slate3)">🌐 Browser / Clinician</div>
+    </div>
+    <div class="arch-row"><div class="arch-arrow">↕</div></div>
+    <div class="arch-row">
+      <div class="arch-box" style="border-color:var(--border2);color:var(--blue2)">▲ Vercel<br/><small style="color:var(--slate)">Next.js 16 Frontend<br/>3 pages · TypeScript · Framer Motion</small></div>
+    </div>
+    <div class="arch-row"><div class="arch-arrow">↕ REST API (CORS enabled)</div></div>
+    <div class="arch-row" style="gap:16px">
+      <div class="arch-box" style="border-color:rgba(16,185,129,.3);color:var(--green2)">🚂 Railway<br/><small style="color:var(--slate)">FastAPI backend<br/>9 endpoints · Python 3.14</small></div>
+      <div class="arch-arrow">↔</div>
+      <div class="arch-box" style="border-color:rgba(139,92,246,.3);color:var(--violet2)">🌲 Pinecone<br/><small style="color:var(--slate)">Serverless vector DB<br/>61 correction vectors · 1024-dim</small></div>
+    </div>
+    <div class="arch-row"><div class="arch-arrow">↕</div></div>
+    <div class="arch-row" style="gap:16px">
+      <div class="arch-box" style="border-color:rgba(245,158,11,.3);color:var(--amber2)">🧠 Azure Claude Opus 4.5<br/><small style="color:var(--slate)">bhura-mhuqlv16-eastus2<br/>services.ai.azure.com</small></div>
+      <div class="arch-arrow">+</div>
+      <div class="arch-box" style="border-color:rgba(59,130,246,.3);color:var(--blue2)">🔢 Jina AI<br/><small style="color:var(--slate)">Cloud embeddings API<br/>jina-embeddings-v3 · 1M tok/mo free</small></div>
+    </div>
+  </div>
+
+  <div class="col2 anim-in anim-delay-3" style="margin-top:24px">
+    <div class="card">
+      <h4>Backend Endpoints</h4>
+      <table>
+        <tr><th>Endpoint</th><th>Purpose</th></tr>
+        <tr><td><code>GET /</code></td><td>Health + Pinecone count</td></tr>
+        <tr><td><code>GET /patients</code></td><td>List available patients</td></tr>
+        <tr><td><code>POST /run</code></td><td>Start agent (async job)</td></tr>
+        <tr><td><code>GET /run/{id}</code></td><td>Poll job status</td></tr>
+        <tr><td><code>GET /summary/{id}</code></td><td>Fetch completed summary</td></tr>
+        <tr><td><code>GET /trace/{id}</code></td><td>Fetch step trace</td></tr>
+        <tr><td><code>POST /learning/run</code></td><td>Trigger learning loop</td></tr>
+        <tr><td><code>GET /learning/metrics</code></td><td>Reward metrics</td></tr>
+        <tr><td><code>GET /learning/corrections</code></td><td>Pinecone vectors</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h4>Data Flow</h4>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-title">Clinician selects patient</div><div class="tl-body">Frontend calls POST /run → Railway creates background job</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-title">Agent runs on Railway</div><div class="tl-body">Claude calls tools → reads patient JSON → reasons → produces output</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-title">Frontend polls every 3s</div><div class="tl-body">GET /run/{job_id} until status === "done"</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-title">Summary + trace displayed</div><div class="tl-body">JSON parsed into structured UI with status chips</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 5: AGENT LOOP ══════════ -->
+<div class="page" id="p4">
+  <div class="page-title anim-in">Agent Loop Design</div>
+  <p class="page-sub anim-in anim-delay-1">Not a hardcoded pipeline — Claude Opus 4.5 decides at every step what to read, what to flag, what to escalate, and when to stop.</p>
+
+  <div class="col2 anim-in anim-delay-2">
+    <div>
+      <h3>The Loop</h3>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot" style="background:var(--blue)"></div><div class="tl-title">Step 1 — PLAN</div><div class="tl-body">Call <code>list_patient_pages</code> → see all docs and types. Agent decides which to read first.</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--blue2)"></div><div class="tl-title">Steps 2-4 — READ</div><div class="tl-body">Call <code>read_pages</code> (max 5 at a time). Reads clinical notes, labs, medication charts in priority order.</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--violet)"></div><div class="tl-title">Step 5-6 — RECONCILE</div><div class="tl-body">Extract admission meds + discharge meds → call <code>reconcile_medications</code> → formal diff.</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--amber)"></div><div class="tl-title">Step 7-8 — CHECK & FLAG</div><div class="tl-body">Call <code>check_drug_interaction</code>, <code>detect_conflict</code>, <code>escalate_to_clinician</code>, <code>flag_missing_field</code>.</div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--green)"></div><div class="tl-title">Step 9-10 — DRAFT</div><div class="tl-body">Produce final JSON summary. Every field either sourced with page citation or explicitly marked.</div></div>
+      </div>
+    </div>
+    <div>
+      <h3>Hard Constraints</h3>
+      <div class="card card-red">
+        <h4>Step Cap</h4>
+        <pre><span class="cls">MAX_STEPS</span> = <span class="num">15</span>
+<span class="kw">while</span> step < <span class="cls">MAX_STEPS</span>:
+    step += <span class="num">1</span>
+    response = <span class="fn">call_claude</span>(messages)
+    <span class="kw">if</span> stop_reason == <span class="str">'end_turn'</span>:
+        <span class="kw">break</span>  <span class="cm"># done</span>
+    <span class="kw">elif</span> stop_reason == <span class="str">'tool_use'</span>:
+        <span class="fn">execute_tools</span>(response)
+<span class="cm"># Hard stop — saves best-effort summary</span></pre>
+      </div>
+      <div class="card card-blue">
+        <h4>Retry Logic</h4>
+        <pre><span class="kw">for</span> attempt <span class="kw">in</span> <span class="fn">range</span>(<span class="num">3</span>):
+    <span class="kw">try</span>:
+        result = <span class="fn">tool_fn</span>(**tool_input)
+        <span class="kw">if</span> result[<span class="str">'status'</span>] == <span class="str">'timeout'</span>:
+            <span class="fn">sleep</span>(<span class="num">1</span>); <span class="kw">continue</span>
+        <span class="kw">return</span> result
+    <span class="kw">except</span> <span class="cls">Exception</span> <span class="kw">as</span> e:
+        <span class="kw">if</span> attempt == <span class="num">2</span>:
+            <span class="kw">return</span> {<span class="str">"status"</span>:<span class="str">"error"</span>}</pre>
+      </div>
+      <div class="card">
+        <h4>Actual Performance (Patient 2)</h4>
+        <div class="card-row card-3">
+          <div class="stat-box stat-blue"><div class="stat-val">10</div><div class="stat-lbl">Steps Used</div></div>
+          <div class="stat-box stat-green"><div class="stat-val">16</div><div class="stat-lbl">Tool Calls</div></div>
+          <div class="stat-box stat-white"><div class="stat-val">~2m</div><div class="stat-lbl">Runtime</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 6: TOOLS ══════════ -->
+<div class="page" id="p5">
+  <div class="page-title anim-in">All 7 Agent Tools</div>
+  <p class="page-sub anim-in anim-delay-1">Claude Opus 4.5 decides when to call each tool. Tools are defined with Anthropic's <code>input_schema</code> format and executed server-side with retry logic.</p>
+
+  <div class="col2 anim-in anim-delay-2">
+    <div>
+      <div class="tool-card">
+        <div class="tool-name">list_patient_pages(patient_id)</div>
+        <div class="tool-desc">Returns a page index: page number, doc type (ADMISSION_NOTE, LAB_RESULT, MEDICATION_CHART, etc.), and 200-char preview. Called first on every run.</div>
+        <div class="tool-when"><strong>When:</strong> Always — Step 1 of every agent run</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">read_pages(patient_id, page_numbers)</div>
+        <div class="tool-desc">Returns full OCR text for up to 5 pages. Max 5 per call to stay within Claude's context window. Agent calls multiple times for different document types.</div>
+        <div class="tool-when"><strong>When:</strong> After listing pages — reads clinical notes, labs, med charts in order of importance</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">reconcile_medications(admission_meds, discharge_meds)</div>
+        <div class="tool-desc">Formal diff: compares two medication lists by name, flags added/stopped/changed/unchanged. Any unexplained change triggers a flag automatically.</div>
+        <div class="tool-when"><strong>When:</strong> After extracting both medication lists separately</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">detect_conflict(patient_id, field, source_a, value_a, source_b, value_b)</div>
+        <div class="tool-desc">Records a clinical data conflict between two source documents. Writes to conflicts.json. Never resolves — always escalates to clinician.</div>
+        <div class="tool-when"><strong>When:</strong> When same field has different values in different documents</div>
+      </div>
+    </div>
+    <div>
+      <div class="tool-card">
+        <div class="tool-name">check_drug_interaction(medications)</div>
+        <div class="tool-desc">Mock drug interaction DB with 9 known pairs (metformin+contrast, warfarin+aspirin, etc.). Simulates 5% timeout rate to test failure handling. Any hit → escalate.</div>
+        <div class="tool-when"><strong>When:</strong> After extracting discharge medication list</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">escalate_to_clinician(patient_id, field, reason)</div>
+        <div class="tool-desc">Writes escalation to escalations.json with timestamp. Used for: drug interactions, undocumented medication changes, data conflicts, safety concerns.</div>
+        <div class="tool-when"><strong>When:</strong> Any safety concern, conflict, or unexplained clinical finding</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">flag_missing_field(patient_id, field_name, context)</div>
+        <div class="tool-desc">Marks a required discharge summary field as MISSING or PENDING. Provides context about why it's missing (not in documents, OCR failure, etc.).</div>
+        <div class="tool-when"><strong>When:</strong> Every required field not found in source documents</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 7: GUARDRAIL ══════════ -->
+<div class="page" id="p6">
+  <div class="page-title anim-in">No-Fabrication Guardrail</div>
+  <p class="page-sub anim-in anim-delay-1">The #1 clinical safety requirement. Every field in the output is either explicitly sourced from a document, or explicitly marked as missing/pending/conflicted. The agent never guesses.</p>
+
+  <div class="col2 anim-in anim-delay-2">
+    <div>
+      <h3>Five Field States</h3>
+      <div class="card" style="margin-bottom:10px">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+          <span class="chip chip-found">✓ FOUND</span>
+          <span style="font-size:13px;color:var(--slate2)">Value extracted + source page cited</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+          <span class="chip chip-missing">— MISSING</span>
+          <span style="font-size:13px;color:var(--slate2)">Not found in any document</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+          <span class="chip chip-pending">⏳ PENDING</span>
+          <span style="font-size:13px;color:var(--slate2)">Result not yet available</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+          <span class="chip chip-conflict">⚡ CONFLICT</span>
+          <span style="font-size:13px;color:var(--slate2)">Two docs disagree — both shown</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span class="chip chip-escalate">🚨 FLAGGED</span>
+          <span style="font-size:13px;color:var(--slate2)">Safety concern escalated</span>
+        </div>
+      </div>
+      <div class="alert alert-blue"><span class="alert-icon">🔒</span><span>The system prompt uses the phrase <strong>"NEVER invent, guess, or infer any clinical fact not explicitly stated in source documents"</strong> as an absolute rule, not a suggestion.</span></div>
+    </div>
+    <div>
+      <h3>Pydantic Model</h3>
+<pre><span class="kw">class</span> <span class="cls">ClinicalField</span>(BaseModel):
+    value: Optional[<span class="cls">str</span>] = <span class="num">None</span>
+    status: <span class="cls">FieldStatus</span>  <span class="cm"># FOUND/MISSING/etc</span>
+    source: Optional[<span class="cls">str</span>] = <span class="num">None</span>  <span class="cm"># page X</span>
+    flag_reason: Optional[<span class="cls">str</span>] = <span class="num">None</span>
+
+    <span class="kw">def</span> <span class="fn">display</span>(self) -> <span class="cls">str</span>:
+        <span class="kw">if</span> self.status == FOUND:
+            <span class="kw">return</span> <span class="str">f"{self.value} [src:{self.source}]"</span>
+        <span class="kw">elif</span> self.status == MISSING:
+            <span class="kw">return</span> <span class="str">"[MISSING — clinician review]"</span>
+        <span class="kw">elif</span> self.status == CONFLICT:
+            <span class="kw">return</span> <span class="str">f"[CONFLICT: {self.flag_reason}]"</span></pre>
+      <div class="alert alert-green"><span class="alert-icon">✅</span><span>The parse_field() function handles ANY type Claude returns (str, list, dict, None) — it never crashes, always falls back to MISSING status.</span></div>
+      <div class="card card-blue">
+        <h4>Output always labeled</h4>
+        <p>Every discharge summary starts with: <strong style="color:var(--amber2)">"THIS IS A DRAFT FOR CLINICIAN REVIEW — NOT FINAL"</strong> — enforced in the model's to_readable() method, not optional.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 8: MED RECONCILIATION ══════════ -->
+<div class="page" id="p7">
+  <div class="page-title anim-in">Medication Reconciliation</div>
+  <p class="page-sub anim-in anim-delay-1">Formal comparison of what medications a patient came in on vs what they're discharged with. Every unexplained change is flagged.</p>
+
+  <div class="col2 anim-in anim-delay-2">
+    <div>
+      <h3>reconcile_medications() Logic</h3>
+<pre><span class="kw">def</span> <span class="fn">reconcile_medications</span>(
+    admission_meds: list,
+    discharge_meds: list
+) -> dict:
+    adm = {m[<span class="str">'name'</span>].lower(): m <span class="kw">for</span> m <span class="kw">in</span> admission_meds}
+    dis = {m[<span class="str">'name'</span>].lower(): m <span class="kw">for</span> m <span class="kw">in</span> discharge_meds}
+
+    <span class="cm"># In discharge but not admission = ADDED</span>
+    <span class="kw">for</span> name <span class="kw">in</span> dis - adm:
+        <span class="kw">if not</span> has_reason(dis[name]):
+            flags.<span class="fn">append</span>(<span class="str">f"ADDED with no reason: {name}"</span>)
+
+    <span class="cm"># In admission but not discharge = STOPPED</span>
+    <span class="kw">for</span> name <span class="kw">in</span> adm - dis:
+        flags.<span class="fn">append</span>(<span class="str">f"STOPPED — no documentation: {name}"</span>)
+
+    <span class="cm"># Dose changed = CHANGED</span>
+    <span class="kw">for</span> name <span class="kw">in</span> adm & dis:
+        <span class="kw">if</span> adm[name][<span class="str">'dose'</span>] != dis[name][<span class="str">'dose'</span>]:
+            flags.<span class="fn">append</span>(<span class="str">f"DOSE CHANGED: {name}"</span>)</pre>
+    </div>
+    <div>
+      <h3>Patient 1 — Real Output</h3>
+      <div class="alert alert-amber"><span class="alert-icon">🚨</span><span><strong>ESCALATED:</strong> Patient documented as K/C/O Thyroid disorder on treatment at admission, but NO thyroid medication appears on discharge list. Discontinuation not documented. Requires clinician verification.</span></div>
+      <div class="card">
+        <h4>Discharge Medications Found</h4>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-dot" style="background:var(--green)"></div><div class="tl-title">Rabeprazole (RACTIPER) 40mg oral 1-0-0</div><div class="tl-body">Status: ADDED · Reason: GI protection for gastroenteritis</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--green)"></div><div class="tl-title">Ondansetron (EMESET) 4mg oral 1-0-1</div><div class="tl-body">Status: ADDED · Reason: Nausea/vomiting</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--green)"></div><div class="tl-title">M STRONG (Multivitamin) 1 tab oral 1-0-0</div><div class="tl-body">Status: ADDED · Reason: Nutritional support</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--amber)"></div><div class="tl-title">ENTRO (antibiotic) — dose illegible</div><div class="tl-body">Status: ADDED · ⚠️ Dose not clearly legible — flagged</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--red)"></div><div class="tl-title">Thyroid medication — MISSING</div><div class="tl-body">Patient was on treatment at admission. Not in discharge list. ESCALATED.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 9: CONFLICT ══════════ -->
+<div class="page" id="p8">
+  <div class="page-title anim-in">Conflict Detection</div>
+  <p class="page-sub anim-in anim-delay-1">When two source documents disagree on the same clinical fact, the agent calls detect_conflict() — it never silently picks one value.</p>
+
+  <div class="anim-in anim-delay-2">
+    <div class="card card-red" style="margin-bottom:20px">
+      <h3 style="color:var(--red2)">⚡ Real Conflict Found: Serum Sodium</h3>
+      <div class="col2" style="margin-top:12px">
+        <div class="card" style="border-color:rgba(245,158,11,.3)">
+          <h4 style="color:var(--amber2)">Page 1 — Clinical Note</h4>
+          <div class="stat-box" style="text-align:left;background:transparent;padding:0;border:none">
+            <p style="margin-bottom:4px"><strong style="color:var(--white)">Serum Sodium:</strong></p>
+            <p style="font-size:28px;font-weight:800;color:var(--amber2)">125.00 mmol/L</p>
+            <p style="font-size:12px;color:var(--slate)">Documented in admission clinical note</p>
+          </div>
+        </div>
+        <div class="card" style="border-color:rgba(239,68,68,.3)">
+          <h4 style="color:var(--red2)">Page 28 — ABG Report</h4>
+          <div style="text-align:left">
+            <p style="margin-bottom:4px"><strong style="color:var(--white)">Serum Sodium [Na+]:</strong></p>
+            <p style="font-size:28px;font-weight:800;color:var(--red2)">114 mmol/L</p>
+            <p style="font-size:12px;color:var(--slate)">Arterial Blood Gas report (Lab)</p>
+          </div>
+        </div>
+      </div>
+      <div class="alert alert-red" style="margin-top:12px"><span class="alert-icon">⚡</span><span><strong>Clinical significance:</strong> 125 = mild hyponatremia. 114 = SEVERE hyponatremia (different treatment protocols). 11 mmol/L difference — could represent different timepoints OR measurement error. Both values are below normal (136-146). Requires clinician review.</span></div>
+    </div>
+
+    <div class="col2 anim-in anim-delay-3">
+      <div>
+        <h3>detect_conflict() Call</h3>
+<pre><span class="fn">detect_conflict</span>(
+  patient_id=<span class="str">"PATIENT_1"</span>,
+  field=<span class="str">"serum_sodium_level"</span>,
+  source_a=<span class="str">"page 1 hospital course narrative"</span>,
+  value_a=<span class="str">"125.00 mmol/L"</span>,
+  source_b=<span class="str">"page 28 ABG report"</span>,
+  value_b=<span class="str">"114 mmol/L"</span>
+)
+<span class="cm"># Writes to conflicts.json</span>
+<span class="cm"># Returns: {resolution: "REQUIRES CLINICIAN REVIEW"}</span></pre>
+      </div>
+      <div>
+        <h3>Why this matters</h3>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-dot" style="background:var(--red)"></div><div class="tl-title">NOT auto-resolved</div><div class="tl-body">The agent does not pick the "more likely" value. Both are surfaced.</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--amber)"></div><div class="tl-title">Persisted to conflicts.json</div><div class="tl-body">Every conflict stored with timestamp for audit trail.</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--blue)"></div><div class="tl-title">Escalated to clinician</div><div class="tl-body">Appears in clinician_flags[] in the discharge summary output.</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--green)"></div><div class="tl-title">Detected 3 times</div><div class="tl-body">Across 3 learning iterations — shows consistent detection.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 10: PATIENT 1 RESULTS ══════════ -->
+<div class="page" id="p9">
+  <div class="page-title anim-in">Patient 1 — Full Output</div>
+  <p class="page-sub anim-in anim-delay-1">Acute Gastroenteritis with Dehydration + UTI + Thyroid disorder. Agent completed in 9-10 steps, 41 escalations across all runs.</p>
+
+  <div class="col2 anim-in anim-delay-2">
+    <div>
+      <div class="card card-blue">
+        <h4>Fields Extracted</h4>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:var(--slate3)">Principal Diagnosis</span>
+            <span class="chip chip-found">✓ FOUND · page 1</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:var(--slate3)">Secondary Diagnoses (×4)</span>
+            <span class="chip chip-found">✓ FOUND · pages 1,30</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:var(--slate3)">Hospital Course</span>
+            <span class="chip chip-found">✓ FOUND · pages 1,2,30</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:var(--slate3)">Procedures (USG, ABG, CAUTI)</span>
+            <span class="chip chip-found">✓ FOUND · pages 26,28,30</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:var(--slate3)">Discharge Condition</span>
+            <span class="chip chip-found">✓ FOUND · page 2</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:var(--slate3)">Follow-up Date</span>
+            <span class="chip chip-found">✓ FOUND · page 2</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:var(--slate3)">Demographics</span>
+            <span class="chip chip-missing">— MISSING</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:var(--slate3)">Admission/Discharge Dates</span>
+            <span class="chip chip-missing">— MISSING</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:var(--slate3)">Allergies</span>
+            <span class="chip chip-missing">— MISSING (illegible)</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:var(--slate3)">Urine Culture Result</span>
+            <span class="chip chip-pending">⏳ PENDING</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:var(--slate3)">Serum Sodium</span>
+            <span class="chip chip-conflict">⚡ CONFLICT</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card card-green">
+        <h4>Hospital Course (extracted)</h4>
+        <p style="font-size:12.5px;color:var(--slate2);line-height:1.7">
+          Patient presented with multiple episodes of loose stools, 2-3 episodes of vomiting, fatigue for 3 days, and fever. Initially treated at local clinic. On evaluation: serum creatinine elevated (1.65 mg/dL), sodium 125 mmol/L. Urine routine showed pus cells, RBCs, ketone bodies, bacteria. USG showed Grade-I fatty liver, edematous ascending colon (possible colitis), cholelithiasis without cholecystitis, minimal ascites, right pleural effusion with subsegmental consolidation. Treated with IV fluids, IV antibiotics, IV PPIs, IV antiemetics. Repeat creatinine normalized (1.17). TSH and Free T4 normal. Stool routine showed 2-3/hpf RBCs. <strong style="color:var(--amber2)">Discharged at request — attenders not willing to continue hospitalisation.</strong>
+        </p>
+      </div>
+      <div class="alert alert-red"><span class="alert-icon">🚨</span><span><strong>ESCALATED:</strong> Thyroid medication present on admission (K/C/O thyroid disorder on treatment) but NOT in discharge list. No documented reason for discontinuation.</span></div>
+      <div class="alert alert-amber"><span class="alert-icon">⏳</span><span><strong>PENDING:</strong> Urine culture and sensitivity — result awaited. Patient discharged at request before result available. Follow-up review 09.05.2026.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 11: PATIENT 2 RESULTS ══════════ -->
+<div class="page" id="p10">
+  <div class="page-title anim-in">Patient 2 — Full Output</div>
+  <p class="page-sub anim-in anim-delay-1">DKA + Uncontrolled T2DM + Acute Pyelonephritis. Documents are heavily handwritten — demonstrates the agent's correct behavior when documentation is missing.</p>
+
+  <div class="col2 anim-in anim-delay-2">
+    <div>
+      <div class="card card-blue">
+        <h4>What the Agent Found</h4>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:var(--slate3)">Principal Diagnosis</span>
+            <span class="chip chip-found">✓ FOUND · pages 54,56,58</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:var(--slate3)">Secondary Diagnoses (×3)</span>
+            <span class="chip chip-found">✓ FOUND · pages 46,48,51,56</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:var(--slate3)">Allergies</span>
+            <span class="chip chip-found">✓ NKDA · page 46</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:var(--slate3)">Demographics</span>
+            <span class="chip chip-missing">— MISSING</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:var(--slate3)">Discharge Medications</span>
+            <span class="chip chip-missing">— MISSING</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:var(--slate3)">Hospital Course</span>
+            <span class="chip chip-missing">— MISSING</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;color:var(--slate3)">Procedures</span>
+            <span class="chip chip-missing">— MISSING</span>
+          </div>
+        </div>
+      </div>
+      <div class="alert alert-green" style="margin-top:12px"><span class="alert-icon">✅</span><span><strong>This IS correct behaviour.</strong> Patient 2's records have no medication chart or discharge document. The agent correctly refused to fabricate any medication data.</span></div>
+    </div>
+    <div>
+      <div class="card card-red">
+        <h4>Critical Escalation</h4>
+        <p style="font-size:12.5px;color:#fca5a5;line-height:1.7">
+          <strong>CRITICAL:</strong> No MEDICATION_CHART or DISCHARGE_DOC found. Patient has Type 2 Diabetes with DKA and UTI/Pyelonephritis. Clinician MUST document:
+        </p>
+        <div class="timeline" style="margin-top:10px">
+          <div class="tl-item"><div class="tl-dot" style="background:var(--red)"></div><div class="tl-title">Basal insulin regimen</div><div class="tl-body">DKA patient — insulin mandatory, not optional</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--red)"></div><div class="tl-title">Bolus/prandial insulin</div><div class="tl-body">Timing and dose with meals</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--amber)"></div><div class="tl-title">Oral hypoglycemics</div><div class="tl-body">Metformin mentioned in past history</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--amber)"></div><div class="tl-title">Antibiotic therapy</div><div class="tl-body">Pyelonephritis — antibiotic course and duration required</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 12: LEARNING LOOP ══════════ -->
+<div class="page" id="p11">
+  <div class="page-title anim-in">Part 2 — Learning Loop Design</div>
+  <p class="page-sub anim-in anim-delay-1">The assignment says to manufacture a feedback loop. We built: Simulated Doctor → Extract Corrections → Store in Pinecone → Inject into Future Runs.</p>
+
+  <div class="col2 anim-in anim-delay-2">
+    <div>
+      <h3>The Architecture</h3>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot" style="background:var(--blue)"></div>
+          <div class="tl-title">Step 1 — Agent generates draft (iter 0)</div>
+          <div class="tl-body">No corrections in Pinecone yet. Baseline quality.</div>
+        </div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--violet)"></div>
+          <div class="tl-title">Step 2 — Simulated Doctor Reviews</div>
+          <div class="tl-body">Claude Opus 4.5 plays a senior clinician with a <strong>hidden editing policy</strong>. Applies consistent formatting and clinical corrections.</div>
+        </div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--amber)"></div>
+          <div class="tl-title">Step 3 — Extract Correction Patterns</div>
+          <div class="tl-body">Claude compares draft vs edited version, extracts generalizable patterns. e.g. "Always expand 1-0-0 to once daily (morning)"</div>
+        </div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--green)"></div>
+          <div class="tl-title">Step 4 — Store in Pinecone</div>
+          <div class="tl-body">Each pattern embedded with Jina AI (1024-dim) and stored permanently. Never lost — survives restarts.</div>
+        </div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--blue)"></div>
+          <div class="tl-title">Step 5 — Next run (iter 1+)</div>
+          <div class="tl-body">Query Pinecone for relevant corrections → inject top 8 into system prompt → better draft → lower edit burden.</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3>Doctor's Hidden Policy</h3>
+      <div class="card card-violet">
+        <p style="font-size:12px;color:var(--violet2);margin-bottom:8px"><strong>Agent does NOT see these rules. Must learn from corrections:</strong></p>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-dot" style="background:var(--violet)"></div><div class="tl-title">Medication format</div><div class="tl-body">1-0-0 → "once daily (morning)" · BD → "twice daily"</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--violet)"></div><div class="tl-title">Always add route</div><div class="tl-body">oral / IV / subcutaneous / topical always specified</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--violet)"></div><div class="tl-title">Diagnosis format</div><div class="tl-body">"Condition — qualifier" e.g. "DKA — resolved on discharge"</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--violet)"></div><div class="tl-title">Follow-up standard</div><div class="tl-body">Always ends: "Return to ED if symptoms worsen"</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--violet)"></div><div class="tl-title">Pending results note</div><div class="tl-body">Always adds: "Results to be communicated by treating team/GP"</div></div>
+        </div>
+      </div>
+      <div class="alert alert-blue"><span class="alert-icon">💡</span><span>Approach: <strong>Structured correction-memory injected into future prompts</strong> — one of the valid approaches listed in the assignment. Chosen because it's explainable, measurable, and works without fine-tuning access.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 13: PINECONE + JINA ══════════ -->
+<div class="page" id="p12">
+  <div class="page-title anim-in">Pinecone + Jina AI — Memory Architecture</div>
+  <p class="page-sub anim-in anim-delay-1">Cloud-native, never loses data. 61 correction vectors stored permanently. Semantic retrieval finds relevant past corrections for any new patient.</p>
+
+  <div class="col2 anim-in anim-delay-2">
+    <div>
+      <h3>Why These Tools?</h3>
+      <table>
+        <tr><th>Option</th><th>Why Chosen</th></tr>
+        <tr><td>Pinecone Serverless</td><td>Free 2GB, cloud-native, never loses data on restart</td></tr>
+        <tr><td>Jina AI (not Voyage)</td><td>Voyage AI → 3 RPM free limit (hit rate limits). Jina → 1M tokens/month, no payment needed</td></tr>
+        <tr><td>1024 dims</td><td>jina-embeddings-v3 default — matches Pinecone index created at setup</td></tr>
+        <tr><td>cosine similarity</td><td>Best for semantic text matching (vs dot product)</td></tr>
+      </table>
+
+      <div class="card card-violet">
+        <h4>Correction Vector Structure</h4>
+<pre>{
+  <span class="str">"id"</span>: <span class="str">"uuid-v4"</span>,
+  <span class="str">"values"</span>: [<span class="num">0.12</span>, <span class="num">-0.34</span>, ...],  <span class="cm">// 1024-dim</span>
+  <span class="str">"metadata"</span>: {
+    <span class="str">"section"</span>: <span class="str">"discharge_medications"</span>,
+    <span class="str">"agent_wrote"</span>: <span class="str">"Rabeprazole 40mg 1-0-0"</span>,
+    <span class="str">"doctor_changed_to"</span>: <span class="str">"Rabeprazole 40mg oral once daily (morning)"</span>,
+    <span class="str">"pattern"</span>: <span class="str">"Always expand dosing abbreviations and add route"</span>,
+    <span class="str">"iteration"</span>: <span class="num">0</span>,
+    <span class="str">"reward_delta"</span>: <span class="num">0.12</span>
+  }
+}</pre>
+      </div>
+    </div>
+    <div>
+      <h3>Embedding + Retrieval Flow</h3>
+<pre><span class="cm"># STORE a correction</span>
+text = <span class="str">f"Section: {section}. Pattern: {pattern}"</span>
+embedding = <span class="fn">jina_embed</span>([text])[<span class="num">0</span>]  <span class="cm"># 1024-dim</span>
+pinecone.<span class="fn">upsert</span>(vector=embedding, metadata=correction)
+
+<span class="cm"># RETRIEVE for new patient</span>
+query = <span class="str">f"Section: discharge_medications. Context: DKA"</span>
+q_emb = <span class="fn">jina_embed</span>([query])[<span class="num">0</span>]
+results = pinecone.<span class="fn">query</span>(
+    vector=q_emb, top_k=<span class="num">5</span>,
+    filter={<span class="str">"score"</span>: {<span class="str">"$gt"</span>: <span class="num">0.3</span>}}
+)
+
+<span class="cm"># INJECT into agent prompt</span>
+corrections_text = <span class="fn">format_for_prompt</span>(results)
+system_prompt = BASE_PROMPT + corrections_text</pre>
+
+      <div class="card">
+        <h4>Jina API Call (pure HTTP)</h4>
+<pre>requests.<span class="fn">post</span>(
+  <span class="str">"https://api.jina.ai/v1/embeddings"</span>,
+  headers={<span class="str">"Authorization"</span>: <span class="str">f"Bearer {JINA_KEY}"</span>},
+  json={
+    <span class="str">"model"</span>: <span class="str">"jina-embeddings-v3"</span>,
+    <span class="str">"input"</span>: [text],
+    <span class="str">"task"</span>: <span class="str">"text-matching"</span>,
+    <span class="str">"dimensions"</span>: <span class="num">1024</span>
+  }
+)</pre>
+        <div class="alert alert-blue"><span class="alert-icon">🌐</span><span>Pure HTTP — no SDK, no local model. Works identically on Railway, local, or any cloud platform.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 14: METRICS ══════════ -->
+<div class="page" id="p13">
+  <div class="page-title anim-in">Improvement Metrics</div>
+  <p class="page-sub anim-in anim-delay-1">Section-level normalized edit distance measures how much a doctor had to change the draft. Lower edit burden = higher reward = agent learning.</p>
+
+  <div class="col2 anim-in anim-delay-2">
+    <div>
+      <h3>Reward Formula</h3>
+<pre><span class="kw">from</span> difflib <span class="kw">import</span> SequenceMatcher
+
+<span class="kw">def</span> <span class="fn">similarity</span>(draft, edited):
+    <span class="kw">return</span> SequenceMatcher(
+        <span class="num">None</span>, draft.lower(), edited.lower()
+    ).<span class="fn">ratio</span>()
+    <span class="cm"># 0.0 = completely rewritten</span>
+    <span class="cm"># 1.0 = no edits needed</span>
+
+<span class="cm"># Weighted average across sections</span>
+weights = {
+  <span class="str">"discharge_medications"</span>: <span class="num">2.0</span>,
+  <span class="str">"principal_diagnosis"</span>: <span class="num">2.0</span>,
+  <span class="str">"hospital_course"</span>: <span class="num">1.5</span>,
+  <span class="str">"pending_results"</span>: <span class="num">1.5</span>,
+  <span class="str">"clinician_flags"</span>: <span class="num">1.5</span>,
+}</pre>
+
+      <div class="card card-blue" style="margin-top:14px">
+        <h4>Per-Iteration Results</h4>
+        <div class="metric-row">
+          <div class="metric-label"><span>Iteration 0 (baseline)</span><span style="color:var(--slate3)">75.8%</span></div>
+          <div class="metric-bar"><div class="metric-fill fill-blue" id="m0" style="width:0%"></div></div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label"><span>Iteration 1 (+Pinecone)</span><span style="color:var(--green2)">77.5%</span></div>
+          <div class="metric-bar"><div class="metric-fill fill-green" id="m1" style="width:0%"></div></div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label"><span>Iteration 2 (+more corrections)</span><span style="color:var(--amber2)">71.0%</span></div>
+          <div class="metric-bar"><div class="metric-fill fill-amber" id="m2" style="width:0%"></div></div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label"><span style="color:var(--green2)">Patient 1 Peak (iter 1)</span><span style="color:var(--green2)">82.9%</span></div>
+          <div class="metric-bar"><div class="metric-fill fill-green" id="m3" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3>Observations</h3>
+      <div class="card card-green">
+        <h4 style="color:var(--green2)">What worked</h4>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-dot" style="background:var(--green)"></div><div class="tl-title">Patient 1: +26.2% iter 0→1</div><div class="tl-body">Learning from doctor corrections dramatically improved medication formatting and discharge condition wording.</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--green)"></div><div class="tl-title">Cold start solved</div><div class="tl-body">61 corrections in Pinecone persist across all restarts and deployments.</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--green)"></div><div class="tl-title">Semantic retrieval</div><div class="tl-body">Jina embeddings find relevant corrections even with different wording.</div></div>
+        </div>
+      </div>
+      <div class="card card-amber">
+        <h4 style="color:var(--amber2)">Limitations found</h4>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-dot" style="background:var(--amber)"></div><div class="tl-title">Cross-patient bleed</div><div class="tl-body">P1 corrections (gastroenteritis style) degraded P2 (DKA) — needs disease-type stratification.</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--amber)"></div><div class="tl-title">Over-injection at iter 2</div><div class="tl-body">28 patterns injected → agent over-complicated outputs → lower reward. Sweet spot ~8 corrections.</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--amber)"></div><div class="tl-title">Small dataset</div><div class="tl-body">2 patients insufficient for stable generalisation. Production needs 100+ pairs.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 15: APIs ══════════ -->
+<div class="page" id="p14">
+  <div class="page-title anim-in">APIs & Services Used</div>
+  <p class="page-sub anim-in anim-delay-1">Every external service used, why it was chosen, and the cost profile.</p>
+
+  <div class="col2 anim-in anim-delay-2">
+    <div>
+      <div class="card card-blue">
+        <h3>🧠 Azure Claude Opus 4.5</h3>
+        <table>
+          <tr><th>Property</th><th>Value</th></tr>
+          <tr><td>Endpoint</td><td><code>bhura-mhuqlv16-eastus2.services.ai.azure.com</code></td></tr>
+          <tr><td>Model</td><td><code>claude-opus-4-5</code></td></tr>
+          <tr><td>Auth</td><td>Bearer token (Azure AI)</td></tr>
+          <tr><td>Max tokens</td><td>4096 per call</td></tr>
+          <tr><td>Cost per run</td><td>~$0.80 (both patients)</td></tr>
+          <tr><td>Tool use</td><td>Anthropic format (<code>input_schema</code>)</td></tr>
+        </table>
+        <div class="alert alert-blue" style="margin-top:8px"><span class="alert-icon">💡</span><span>We use <code>urllib.request</code> directly — no Anthropic SDK dependency. Works on any Python 3.x environment.</span></div>
+      </div>
+      <div class="card card-violet" style="margin-top:14px">
+        <h3>🌲 Pinecone Serverless</h3>
+        <table>
+          <tr><th>Property</th><th>Value</th></tr>
+          <tr><td>Index</td><td><code>discharge-corrections</code></td></tr>
+          <tr><td>Dimension</td><td>1024</td></tr>
+          <tr><td>Metric</td><td>cosine</td></tr>
+          <tr><td>Cloud</td><td>AWS us-east-1</td></tr>
+          <tr><td>Free tier</td><td>2GB, unlimited vectors</td></tr>
+          <tr><td>Vectors stored</td><td>61</td></tr>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div class="card card-green">
+        <h3>🔢 Jina AI Embeddings</h3>
+        <table>
+          <tr><th>Property</th><th>Value</th></tr>
+          <tr><td>Model</td><td><code>jina-embeddings-v3</code></td></tr>
+          <tr><td>Dimensions</td><td>1024</td></tr>
+          <tr><td>Task</td><td>text-matching</td></tr>
+          <tr><td>Free tier</td><td>1M tokens/month</td></tr>
+          <tr><td>Why chosen</td><td>Voyage AI had 3 RPM limit on free tier</td></tr>
+          <tr><td>API</td><td>Pure HTTP, no SDK</td></tr>
+        </table>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <h3>🚂 Railway + ▲ Vercel</h3>
+        <table>
+          <tr><th>Service</th><th>Role</th><th>Free</th></tr>
+          <tr><td>Railway</td><td>FastAPI backend, patient data, agent</td><td>$5 credit</td></tr>
+          <tr><td>Vercel</td><td>Next.js frontend, static hosting</td><td>Free tier</td></tr>
+          <tr><td>GitHub</td><td>Two repos (backend + frontend)</td><td>Free</td></tr>
+        </table>
+        <div class="alert alert-green" style="margin-top:8px"><span class="alert-icon">✅</span><span>Total infrastructure cost: <strong>$0</strong> (all free tiers). The only spend is Claude API usage (~$0.80/run).</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 16: DEMO & LINKS ══════════ -->
+<div class="page" id="p15">
+  <div class="hero-center">
+    <div class="anim-in" style="margin-bottom:20px">
+      <span class="badge badge-green" style="font-size:12px;padding:6px 16px">🟢 System Live</span>
+    </div>
+    <h1 class="hero-title anim-in anim-delay-1">
+      <span class="hero-gradient">Everything is Live</span>
+    </h1>
+    <p class="hero-desc anim-in anim-delay-2">
+      Backend on Railway, frontend on Vercel, 61 corrections in Pinecone, both patients processed, improvement curve generated.
+    </p>
+
+    <div class="anim-in anim-delay-3" style="width:100%;max-width:640px">
+      <div class="card card-blue" style="margin-bottom:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <h4 style="margin-bottom:4px">🚂 Railway Backend API</h4>
+            <p style="font-size:13px;color:var(--blue2)">https://unriddle-production.up.railway.app</p>
+          </div>
+          <span class="badge badge-green">LIVE</span>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <h4 style="margin-bottom:4px">▲ Vercel Frontend</h4>
+            <p style="font-size:13px;color:var(--slate2)">unriddle-frontend.vercel.app</p>
+          </div>
+          <span class="badge badge-blue">DEPLOYING</span>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <h4 style="margin-bottom:4px">🐙 Frontend GitHub</h4>
+            <p style="font-size:13px;color:var(--slate2)">github.com/Kryex-labs/unriddle-frontend</p>
+          </div>
+          <span class="badge badge-green">PUSHED</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-stats anim-in anim-delay-4" style="max-width:640px">
+      <div class="stat-box stat-blue"><div class="stat-val">2</div><div class="stat-lbl">Patients Processed</div></div>
+      <div class="stat-box stat-green"><div class="stat-val">61</div><div class="stat-lbl">Pinecone Vectors</div></div>
+      <div class="stat-box stat-violet"><div class="stat-val">3</div><div class="stat-lbl">Learning Iterations</div></div>
+      <div class="stat-box stat-amber"><div class="stat-val">41</div><div class="stat-lbl">Escalations Logged</div></div>
+    </div>
+
+    <div class="anim-in anim-delay-5" style="margin-top:28px;max-width:640px;width:100%">
+      <div class="alert alert-amber"><span class="alert-icon">📹</span><span><strong>Video Demo Required:</strong> Record 3-5 min Loom showing: (1) Run agent on Patient 1 with conflict, (2) Walk through trace step where agent escalated vs guessed, (3) Show learning metrics improvement curve.</span></div>
+      <div class="alert alert-green"><span class="alert-icon">📋</span><span><strong>Submit via:</strong> Google Form provided in assignment email · Source code (GitHub link) · Discharge summaries + traces · Video link · README</span></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end page-container -->
+
+<!-- ══════════ BOTTOM NAV ══════════ -->
+<div id="nav-bar">
+  <button class="nav-btn" id="btn-prev" onclick="navigate(-1)" disabled>← Previous</button>
+  <div style="text-align:center">
+    <div id="page-indicator">1 / 16</div>
+    <div id="page-label">Introduction</div>
+  </div>
+  <button class="nav-btn" id="btn-next" onclick="navigate(1)">Next →</button>
+</div>
+</div><!-- end main -->
+
+</div><!-- end app -->
+
+<script>
+const PAGES = [
+  "Introduction",
+  "The Problem & Data",
+  "OCR Pipeline",
+  "System Architecture",
+  "Agent Loop Design",
+  "All 7 Tools",
+  "No-Fabrication Guardrail",
+  "Medication Reconciliation",
+  "Conflict Detection",
+  "Patient 1 Output",
+  "Patient 2 Output",
+  "Learning Loop Design",
+  "Pinecone + Jina AI",
+  "Improvement Metrics",
+  "APIs & Services",
+  "Live Demo & Links"
+];
+
+let current = 0;
+const total = PAGES.length;
+
+function goTo(idx) {
+  if (idx < 0 || idx >= total) return;
+  const pages = document.querySelectorAll('.page');
+  const navItems = document.querySelectorAll('.nav-item');
+
+  // Exit current
+  pages[current].classList.add('exit-left');
+  pages[current].classList.remove('active');
+  navItems[current].classList.remove('active');
+
+  setTimeout(() => {
+    pages[current].classList.remove('exit-left');
+    current = idx;
+
+    // Enter new
+    pages[current].classList.add('active');
+    navItems[current].classList.add('active');
+
+    // Scroll nav item into view
+    navItems[current].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+
+    // Update bottom bar
+    document.getElementById('page-indicator').textContent = `${current + 1} / ${total}`;
+    document.getElementById('page-label').textContent = PAGES[current];
+
+    // Update buttons
+    document.getElementById('btn-prev').disabled = current === 0;
+    document.getElementById('btn-next').disabled = current === total - 1;
+
+    // Update progress bar
+    document.getElementById('progress-fill').style.width = `${((current + 1) / total) * 100}%`;
+
+    // Trigger metric bars if on page 14
+    if (current === 13) animateMetrics();
+
+    // Re-run entrance animations
+    pages[current].querySelectorAll('.anim-in').forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight;
+      el.style.animation = '';
+    });
+  }, 300);
+}
+
+function navigate(dir) { goTo(current + dir); }
+
+function animateMetrics() {
+  setTimeout(() => {
+    const vals = [75.8, 77.5, 71.0, 82.9];
+    ['m0','m1','m2','m3'].forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el) el.style.width = vals[i] + '%';
+    });
+  }, 400);
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigate(-1);
+});
+
+// Particle background on hero pages
+function createParticle() {
+  const hero = document.querySelector('.page.active .hero-center');
+  if (!hero) return;
+  const p = document.createElement('div');
+  p.style.cssText = `
+    position:absolute;width:2px;height:2px;border-radius:50%;
+    background:rgba(59,130,246,${Math.random() * 0.4 + 0.1});
+    left:${Math.random() * 100}%;top:${Math.random() * 100}%;
+    animation:fadeSlideUp ${3 + Math.random() * 4}s ease infinite;
+    pointer-events:none;
+  `;
+  hero.style.position = 'relative';
+  hero.appendChild(p);
+  setTimeout(() => p.remove(), 7000);
+}
+setInterval(createParticle, 800);
+</script>
+</body>
+</html>
